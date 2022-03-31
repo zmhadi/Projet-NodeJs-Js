@@ -10,8 +10,9 @@ const guard = require('express-jwt-permissions')({
 const adminRole = 'ADMIN';
 const adminOrMemberRoles = [[adminRole], ['MEMBER']];
 
-router.get('/', guard.check(adminOrMemberRoles), (req, res) => {
-  Users.getAllUsers().then(r => {
+router.get('/',/*guard.check(adminOrMemberRoles),*/ (req, res) => {
+  console.log(req.headers)
+  userRepository.getAllUsers().then(r => {
         res.send(r)
   })
 });

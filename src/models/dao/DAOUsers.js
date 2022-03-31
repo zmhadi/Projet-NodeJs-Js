@@ -11,8 +11,8 @@ const getAll = async function () {
  * return one User with id from the database
  * @params {string} pseudo - pseudo of User
  */
-const find = async function (pseudo) {
-    return db.select('*').from('Users').where({pseudo: pseudo})
+const findUserByMail = async function (mail) {
+    return db.select('*').from('Users').where({mail: mail})
 }
 
 /**
@@ -55,7 +55,7 @@ const update = async function (id, firstName, lastName, birthDate, mail, pseudo,
 
 module.exports = {
     getAll,
-    find,
+    findUserByMail,
     add,
     //remove,
     update,

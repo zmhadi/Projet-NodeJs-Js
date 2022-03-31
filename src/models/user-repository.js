@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const { generateHashedPassword } = require('../security/crypto');
 
 exports.getAllUsers = async function () {
-  const DAOUsers = require('../dao/DAOUsers')
+  const DAOUsers = require('./dao/DAOUsers')
 
     const allUsers = await DAOUsers.getAll()
     const arrayUsers = []
@@ -14,14 +14,24 @@ exports.getAllUsers = async function () {
 };
 
 exports.getUserByFirstName = async function (firstName) {
-  const DAOUsers = require('../dao/DAOUsers')
+  const DAOUsers = require('./dao/DAOUsers')
 
     const user = await DAOUsers.find(firstName)
-    console.log(user)
     if (user){
         return {status: 200, message:user}
     } else {
         return {status: 404, message:'User not exist'}
+    }
+};
+
+exports.getUserByMail = async function (mail) {
+  const DAOUsers = require('./dao/DAOUsers')
+
+    const user = await DAOUsers.findUserByMail(mail)
+    if (user){
+        return {status: 200, message:user}
+    } else {
+        return {status: 404, message:'Mail not exist'}
     }
 };
 
@@ -30,7 +40,7 @@ exports.getUserByFirstName = async function (firstName) {
  * @param req - The params send by user with HTML request
  */
 exports.add = async function (req) {
-  const DAOUsers = require('../DAO/DAOUsers')
+  const DAOUsers = require('./DAO/DAOUsers')
   const { firstName, lastName, password } = req.body
 
   if (!firstName) return {status: 422, message:'FirstName required.'}
@@ -65,7 +75,7 @@ exports.updateUser = (id, data) => {
  * @param req - The params send by user with HTML request
  */
 exports.remove = async function (req) {
-  const DAOUsers = require('../DAO/DAOUsers')
+  const DAOUsers = require('./DAO/DAOUsers')
 
   const user = await DAOUsers.findWithId(req.params.id)
   if (user.length !== 0) {
