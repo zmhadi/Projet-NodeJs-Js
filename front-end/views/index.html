@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col s4"></div>
+    <div class="col s4">
+        <h1>Google Books</h1>
+    </div>
+</div>
+<div class="container" style="width: 100%;">
+    <div style="max-width: 500px; right: 0;">
+        <div class="card needs-validation" >
+            <div class="mb-3">
+                <label for="labelMailLogin" class="form-label">Email</label>
+                <input type="email" class="form-control" id="labelMailLogin">
+            </div>
+            <div class="mb-3">
+                <label for="labelPasswordLogin" class="form-label">Password</label>
+                <input type="password" class="form-control" id="labelPasswordLogin">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            </div>
+            <button class="btn btn-primary" onclick="indexController.connection()">Connect</button>
+        </div>
+    </div>
+
+    <!--
+    <div class="col s2"></div>
+    <div class="input-field col s8">
+        <input id="keyword" type="text" class="validate">
+        <label class="active" for="keyword">Keyword: </label>
+        <button class="btn waves-effect waves-light" type="submit"
+                onclick="indexController.search()"
+                name="action" >Search
+            <i class="material-icons right">search</i>
+        </button>
+    </div> -->
+</div>
+
+<div class="row" id="divVolumeTable" style="display: none; padding: 5%;">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody id="volumesTable">
+        </tbody>
+    </table>
+</div>
+
+<div id="volumeImageModal" class="modal">
+    <div class="modal-content">
+        <h4 id="volumeImageModalTitle"></h4>
+        <img src="#" id="volumeImageModalImage">
+    </div>
+    <div class="modal-footer">
+        <button class="modal-close waves-effect waves-green btn-flat">Close</button>
+    </div>
+</div>
