@@ -8,7 +8,7 @@ const formatBodyErrMessage = (valResult) => {
 
 exports.validateBody = (req) => {
   const valResult = validationResult(req);
-
+  console.log('req.body', req.body)
   if (!valResult.isEmpty()) {
     throw new Error(formatBodyErrMessage(valResult));
   }
