@@ -8,14 +8,15 @@ const { validateBody } = require('./validation/route.validator');
 
 router.post(
   '/login',
-  body('mail').isEmpty(),
-  body('password').isEmpty(),
   body('mail').isEmail(),
+  body('password').not().isEmpty(),
   async(req, res) => {
-    validateBody(req);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).end()/*.send(errors.array().map(element => element.msg))*/
+      return res.status(400).send(JSON.stringify(errors.array()))/*errors.array().map(element => {
+        if(element.param == 'mail') {
+          res.status()
+        }})*/
     }
     console.log(req.body)
     const { mail, password } = req.body;
