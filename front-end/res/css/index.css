@@ -1,3 +1,7 @@
-#breedImageModalImage {
-    width: 600px;
+#labelMailLogin, #labelPasswordLogin {
+    margin: 10px;
+    width: auto;
+}
+.card {
+    padding: 10px;
 }

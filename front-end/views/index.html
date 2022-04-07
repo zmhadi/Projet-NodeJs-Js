@@ -1,60 +1,38 @@
-<div class="row">
-    <div class="col s4"></div>
-    <div class="col s4">
-        <h1>Google Books</h1>
-    </div>
-</div>
-<div class="container" style="width: 100%;">
-    <div style="max-width: 500px; right: 0;">
-        <div class="card needs-validation" >
-            <div class="mb-3">
+<div class="container" style="height: 99vh; width: 100vw;">
+    <div class="col"
+         style="max-width: 500px;
+                display: run-in;
+                margin: auto;
+                vertical-align: baseline;
+                height: inherit;">
+        <div class="row" style="padding-top: 50px;">
+            <div class="card">
+                <div style="width: 100%; text-align-last: center">
+                    <img src="https://media.istockphoto.com/vectors/sea-wave-splash-vector-logotype-world-water-day-theme-human-and-vector-id946210340?k=20&m=946210340&s=612x612&w=0&h=q9GxbiGH1cxG-8pzMSF_blga1n7ma4E--7rM3cgi5Yk="
+                         style="width: 50px;height: 50px;">
+                </div>
                 <label for="labelMailLogin" class="form-label">Email</label>
-                <input type="email" class="form-control" id="labelMailLogin">
-            </div>
-            <div class="mb-3">
+                <input type="email" class="form-control" id="labelMailLogin" aria-describedby="emailHelp" placeholder="Enter email">
                 <label for="labelPasswordLogin" class="form-label">Password</label>
-                <input type="password" class="form-control" id="labelPasswordLogin">
+                <input type="password" class="form-control" id="labelPasswordLogin" placeholder="Enter password">
+                <button class="btn btn-primary" onclick="indexController.connection()">Connect</button>
             </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        </div>
+        <div class="row">
+            <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-top w-100">
+                <!-- Then put toasts within -->
+                <div id="toastLogin" data-bs-delay="5000" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header" style="width: 100%;">
+                        <strong id="toastMessage" class="me-auto"></strong>
+                        <small class="text-muted">now</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary" onclick="indexController.connection()">Connect</button>
         </div>
     </div>
-
-    <!--
-    <div class="col s2"></div>
-    <div class="input-field col s8">
-        <input id="keyword" type="text" class="validate">
-        <label class="active" for="keyword">Keyword: </label>
-        <button class="btn waves-effect waves-light" type="submit"
-                onclick="indexController.search()"
-                name="action" >Search
-            <i class="material-icons right">search</i>
-        </button>
-    </div> -->
 </div>
 
-<div class="row" id="divVolumeTable" style="display: none; padding: 5%;">
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col"></th>
-                <th scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody id="volumesTable">
-        </tbody>
-    </table>
-</div>
 
-<div id="volumeImageModal" class="modal">
-    <div class="modal-content">
-        <h4 id="volumeImageModalTitle"></h4>
-        <img src="#" id="volumeImageModalImage">
-    </div>
-    <div class="modal-footer">
-        <button class="modal-close waves-effect waves-green btn-flat">Close</button>
-    </div>
-</div>
+<!-- Flexbox container for aligning the toasts -->
+

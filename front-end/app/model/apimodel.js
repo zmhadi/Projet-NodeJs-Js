@@ -19,6 +19,15 @@ class Apimodel {
         }
     }
 
+    getResponseError() {
+        try {
+            return this.api.getResponseError()
+        }
+        catch {
+            return undefined
+        }
+    }
+
     async getImage(imageId) {
         try {
             const image = await this.api.getImage(imageId)

@@ -17,13 +17,13 @@ router.get('/',/*guard.check(adminOrMemberRoles),*/ (req, res) => {
   })
 });
 
-router.get('/:firstName', guard.check(adminOrMemberRoles), (req, res) => {
-  const foundUser = userRepository.getUserByFirstName(req.params.firstName);
+router.get('/:mail', (req, res) => {
+  const foundUser = userRepository.getUserByMail(req.params.mail);
   if (!foundUser) {
     throw new Error('User not found');
   }
 
-  Users.getUserByFirstName(req.params.firstName).then(r => {
+  userRepository.getUserByMail(req.params.mail).then(r => {
     res.status(r.status).send(r.message)
   })
 });

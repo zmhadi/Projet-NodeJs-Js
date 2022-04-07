@@ -9,6 +9,7 @@ class Api {
             'Content-Type': 'application/json',
             'Authorization': this.token,
         })
+        this.responseError = "";
     }
 
     /*myFetch(url) {
@@ -33,6 +34,10 @@ class Api {
         return this.status
     }
 
+    getResponseError() {
+        return this.responseError
+    }
+
     connection(data) {
         return (async () => {
             try {
@@ -41,15 +46,17 @@ class Api {
                     headers: this.myHeaders,
                     body: JSON.stringify({mail: data.mail, password: data.password})
                 });
-                console.log(rawResponse.status)
-                this.status = rawResponse.status
+                this.status = rawResponse.status || 'undefined'
                 const content = await rawResponse.json()
+                console.log(content)
+                this.responseError = content[0].param || 'undefined'
                 localStorage.setItem("token", content.token)
             }
             catch(e){
              console.log(e)
             }
         })();
+    }
 
         /*console.log('connection', data)
         return new Promise(( async(resolve, reject) => {
@@ -93,7 +100,7 @@ class Api {
                 })
                 .catch(err => reject(err))
         }))*/
-    }
+
 
     /*getBreeds() {
         return this.myFetch(`breeds`)*/

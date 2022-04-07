@@ -13,10 +13,7 @@ router.post(
   async(req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).send(JSON.stringify(errors.array()))/*errors.array().map(element => {
-        if(element.param == 'mail') {
-          res.status()
-        }})*/
+      return res.status(400).send(JSON.stringify(errors.array()))
     }
     console.log(req.body)
     const { mail, password } = req.body;
