@@ -5,3 +5,15 @@
 .card {
     padding: 10px;
 }
+*{
+    box-sizing: content-box;
+}
+.modal {
+    background-color: transparent;
+    overflow: hidden;
+    max-height: 100%;
+    width: 100%;
+}
+.btn {
+    margin: 5px;
+}

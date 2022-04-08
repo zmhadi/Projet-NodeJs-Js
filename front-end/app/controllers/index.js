@@ -10,13 +10,14 @@ class IndexController extends BaseController {
         console.log(await this.model.connection({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value}))
         console.log('connection',this.model.getStatus())
         this.userMail = $("#labelMailLogin").value
+        console.log(this.userMail, 'mail')
         await this.verify()
         if(this.model.getStatus() == 200){
             navigate("home")
         }
     }
     async verify() {
-        let message = await this.model.getResponseError()
+        let message = this.model.getResponseError()
         console.log(message)
         if(message == "password") {
             $("#toastMessage").innerText="Must define password"
