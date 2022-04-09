@@ -48,7 +48,14 @@ class Api {
                     headers: this.myHeaders,
                     body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
                 });
-                console.log(rawResponse)
+                this.status = rawResponse.status || 'undefined'
+                const content = await rawResponse.json()
+                if(await content != undefined) {
+                    this.responseError = content[0].param
+                    console.log(content)
+                }
+
+                this.status = rawResponse.status || 'undefined'
             } catch (e) {
                 console.log(e)
             }

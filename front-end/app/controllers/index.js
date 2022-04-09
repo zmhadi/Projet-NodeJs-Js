@@ -6,12 +6,11 @@ class IndexController extends BaseController {
     }
 
     async connection() {
-        console.log({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value})
-        console.log(await this.model.connection({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value}))
+        //console.log({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value})
+        await this.model.connection({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value})
         console.log('connection',this.model.getStatus())
         this.userMail = $("#labelMailLogin").value
-        console.log(this.userMail, 'mail')
-        await this.verify()
+        //console.log(this.userMail, 'mail')
         if(this.model.getStatus() == 200){
             navigate("home")
         }
@@ -34,14 +33,46 @@ class IndexController extends BaseController {
         }
     }
 
+    async verifyModal() {
+
+        $("#labelPseudoRegister").style.borderBottomColor="grey"
+        $("#labelPseudoRegister").style.borderBottomColor="grey"
+        $("#labelPseudoRegister").style.borderBottomColor="grey"
+        $("#mailRegister").innerHTML=`<p>Email</p>`
+
+        if(this.model.getStatus() == 409){
+            $("#mailRegister").innerHTML+=`<p style="color: red">Email already exist !</p>`
+        }
+        else {
+            $("#mailRegister").innerHTML=""
+        }
+
+        let message = this.model.getResponseError()
+        if(message == "pseudo") {
+            $("#labelPseudoRegister").style.borderBottomColor="red"
+        }
+        else if(message == "mail" || this.model.getStatus() == 409) {
+            $("#labelMailRegister").style.borderBottomColor="red"
+        }
+        else if(message == "password") {
+            $("#labelPasswordRegister").style.borderBottomColor="red"
+        }
+    }
+
     async register() {
         const req = {
             pseudo: $("#labelPseudoRegister").value,
             mail: $("#labelMailRegister").value,
             password: $("#labelPasswordRegister").value
         }
-        console.log(req)
-        console.log(await this.model.register(req))
+        await this.model.register(req)
+        await this.verifyModal()
+        console.log('status', this.model.getStatus())
+
+        if(this.model.getStatus() == 200){
+            $("#closeModal").click()
+            navigate("home")
+        }
     }
 }
 
