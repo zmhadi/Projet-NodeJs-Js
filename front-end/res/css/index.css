@@ -5,8 +5,12 @@
 .card {
     padding: 10px;
 }
-*{
-    box-sizing: content-box;
+.toast {
+    background-color: white;
+}
+small {
+    padding-left: 25px;
+    padding-right: 5px;
 }
 .modal {
     background-color: transparent;

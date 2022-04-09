@@ -16,6 +16,7 @@ class IndexController extends BaseController {
             navigate("home")
         }
     }
+
     async verify() {
         let message = this.model.getResponseError()
         console.log(message)
@@ -31,6 +32,16 @@ class IndexController extends BaseController {
             $("#toastMessage").innerText="Login failed"
             this.toast("toastLogin")
         }
+    }
+
+    async register() {
+        const req = {
+            pseudo: $("#labelPseudoRegister").value,
+            mail: $("#labelMailRegister").value,
+            password: $("#labelPasswordRegister").value
+        }
+        console.log(req)
+        console.log(await this.model.register(req))
     }
 }
 

@@ -11,6 +11,15 @@ class Apimodel {
         }
     }
 
+    async register(data) {
+        try {
+            return await this.api.register(data)
+        }
+        catch {
+            return undefined
+        }
+    }
+
     getStatus() {
         try {
             return this.api.getStatus()

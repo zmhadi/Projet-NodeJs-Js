@@ -39,4 +39,19 @@ class Api {
             }
         })();
     }
+
+    register(data) {
+        return (async () => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/create`, {
+                    method: 'POST',
+                    headers: this.myHeaders,
+                    body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
+                });
+                console.log(rawResponse)
+            } catch (e) {
+                console.log(e)
+            }
+        })();
+    }
 }
