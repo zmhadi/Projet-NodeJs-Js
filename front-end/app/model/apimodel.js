@@ -37,4 +37,22 @@ class Apimodel {
         }
     }
 
+    getUserMail() {
+        try {
+            return this.api.getUserMail()
+        }
+        catch {
+            return undefined
+        }
+    }
+
+    getUser(mail) {
+        try {
+            return this.api.getUser(mail)
+        }
+        catch {
+            return undefined
+        }
+    }
+
 }

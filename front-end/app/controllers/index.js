@@ -36,15 +36,12 @@ class IndexController extends BaseController {
     async verifyModal() {
 
         $("#labelPseudoRegister").style.borderBottomColor="grey"
-        $("#labelPseudoRegister").style.borderBottomColor="grey"
-        $("#labelPseudoRegister").style.borderBottomColor="grey"
-        $("#mailRegister").innerHTML=`<p>Email</p>`
+        $("#labelPasswordRegister").style.borderBottomColor="grey"
+        $("#labelMailRegister").style.borderBottomColor="grey"
+        $("#mailRegister").innerHTML=`<label id="mailRegister" for="labelMailRegister" class="form-label">Email</label>`
 
         if(this.model.getStatus() == 409){
             $("#mailRegister").innerHTML+=`<p style="color: red">Email already exist !</p>`
-        }
-        else {
-            $("#mailRegister").innerHTML=""
         }
 
         let message = this.model.getResponseError()

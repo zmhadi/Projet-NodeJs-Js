@@ -6,7 +6,12 @@ class HomeController extends BaseController {
     }
 
     async load() {
-        console.log("je suis la")
+        const user = await this.model.getUser(this.model.getUserMail())
+        $("#labelPseudoEdit").placeholder= user[0].pseudo
+        $("#labelMailEdit").placeholder= user[0].mail
+        $("#labelPasswordEdit").placeholder= "**********"
+        $("#cardTitle").innerHTML += `<span style="font-weight: bold; color:teal">${user[0].pseudo}</span>`
+        console.log(user[0])
     }
 }
 

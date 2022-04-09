@@ -3,6 +3,8 @@ class Api {
         this.baseurl = "http://localhost:3000"
         this.status = 500
         this.token = localStorage.getItem("token")
+        this.userMail = localStorage.getItem("mail")
+        this.user= {}
         this.myHeaders = new Headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -19,6 +21,10 @@ class Api {
         return this.responseError
     }
 
+    getUserMail(){
+        return this.userMail;
+    }
+
     connection(data) {
         return (async () => {
             try {
@@ -27,13 +33,15 @@ class Api {
                     headers: this.myHeaders,
                     body: JSON.stringify({mail: data.mail, password: data.password})
                 });
+                console.log('hehehe')
                 this.status = rawResponse.status || 'undefined'
                 const content = await rawResponse.json()
-                if(content != undefined) {
+                if(content[0] != undefined) {
                     this.responseError = content[0].param
                     console.log(content)
                 }
-                localStorage.setItem("token", content.token)
+                localStorage.setItem("token", 'Bearer '+content.token)
+                localStorage.setItem("mail", data.mail)
             } catch (e) {
                 console.log(e)
             }
@@ -54,8 +62,21 @@ class Api {
                     this.responseError = content[0].param
                     console.log(content)
                 }
-
                 this.status = rawResponse.status || 'undefined'
+            } catch (e) {
+                console.log(e)
+            }
+        })();
+    }
+
+    getUser(mail){
+        return (async () => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/${mail}`, {
+                    method: 'GET',
+                    headers: this.myHeaders,
+                });
+                return await rawResponse.json()
             } catch (e) {
                 console.log(e)
             }
