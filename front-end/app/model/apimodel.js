@@ -20,6 +20,15 @@ class Apimodel {
         }
     }
 
+    async editUser(mail, data) {
+        try {
+            return await this.api.editUser(mail, data)
+        }
+        catch {
+            return undefined
+        }
+    }
+
     getStatus() {
         try {
             return this.api.getStatus()

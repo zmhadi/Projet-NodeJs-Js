@@ -21,6 +21,10 @@ small {
 .btn {
     margin: 5px;
 }
+#buttonEdit {
+    background-color: grey;
+    border-color: grey;
+}
 @media only screen and (max-width : 400px) {
     #imageUser {
         width: 100%;

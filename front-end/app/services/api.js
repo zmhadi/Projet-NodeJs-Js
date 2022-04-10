@@ -82,4 +82,21 @@ class Api {
             }
         })();
     }
+
+    editUser(mail, data){
+        return (async () => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/${mail}`, {
+                    method: 'PUT',
+                    headers: this.myHeaders,
+                    body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
+                });
+                this.status = rawResponse.status || 'undefined'
+                const content = await rawResponse.json()
+                console.log(content)
+            } catch (e) {
+                console.log(e)
+            }
+        })();
+    }
 }
