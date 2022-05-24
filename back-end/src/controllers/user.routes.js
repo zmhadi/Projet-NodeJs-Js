@@ -30,7 +30,6 @@ router.get('/:mail', (req, res) => {
 
 router.post(
   '/',
-  guard.check(adminRole),
   body('firstName').notEmpty(),
   body('lastName').notEmpty(),
   body('password').notEmpty().isLength({ min: 5 }),
@@ -42,20 +41,23 @@ router.post(
       throw new Error('Unable to create the user');
     }
 
-    Users.add(req).then(r => {
+    userRepository.add(req).then(r => {
       res.status(r.status).send(r.message)
     })
   }
 );
 
-router.put('/:id', guard.check(adminRole), (req, res) => {
-  Users.update(req).then(r => {
-    res.status(r.status).send(r.message)
+router.put('/:mail', (req, res) => {
+  userRepository.updateUser(req.params.mail, req.body).then(r => {
+    if(r) {
+      res.status(200).end()
+    }
+    res.status(400).end()
   })
 });
 
 router.delete('/:id', guard.check(adminRole), (req, res) => {
-  Users.remove(req).then(r => {
+  userRepository.remove(req).then(r => {
     res.status(r.status).send(r.message)
   })
 });

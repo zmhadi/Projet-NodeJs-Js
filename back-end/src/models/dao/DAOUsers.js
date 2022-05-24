@@ -29,8 +29,8 @@ const findUserByMail = async function (mail) {
  * @params {string} pseudo - pseudo of user
  * @params {string} password - password of user
  */
-const add = async function (firstName, lastName, birthDate, mail, pseudo, password) {
-    await db.insert({firstName: firstName, lastName: lastName, birthDate: birthDate, mail: mail, pseudo: pseudo, password: password}).into('Users')
+const addUser = async function ( mail, password, pseudo) {
+    await db.insert({mail: mail, password: password, pseudo: pseudo}).into('Users')
 }
 
 /**
@@ -49,15 +49,16 @@ const remove = async function (id) {
  * @params {string} lastName - lastName of user
  * @params {string} password - password of user
  */
-const update = async function (id, firstName, lastName, birthDate, mail, pseudo, password) {
-    await db.from("Users").where({id: id}).update({firstName: firstName, lastName: lastName, birthDate: birthDate, mail: mail, pseudo: pseudo, password: password})
+const updateUser = async function (id, mail, password, pseudo) {
+    console.log('debug', id, mail, pseudo, password)
+    await db.from("Users").where({id: id}).update({mail: mail, password: password, pseudo: pseudo})
 }
 
 module.exports = {
     getAll,
     findUserByMail,
-    add,
+    addUser,
     //remove,
-    update,
+    updateUser,
     //findWithId
 }

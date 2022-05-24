@@ -1,4 +1,4 @@
-<div class="container" style="height: 99vh; width: 100vw;">
+<div class="container-fluid" style="height: 99vh; width: 100vw;">
     <div class="col"
          style="max-width: 500px;
                 display: run-in;
@@ -18,11 +18,11 @@
                 </div>-->
                 <label for="labelMailLogin" class="form-label">Email</label>
                 <input type="email" class="form-control" id="labelMailLogin" aria-describedby="emailHelp" placeholder="Enter email">
-                <label for="labelPasswordLogin" class="form-label">Password</label>
+                <label for="labelPasswordLogin" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="labelPasswordLogin" placeholder="Enter password">
-                <button class="btn btn-primary" onclick="indexController.connection()">Connect</button>
+                <button class="btn btn-primary" onclick="indexController.connection()">Se connecter</button>
                 <div style="text-align: center; padding-top: 5px">
-                    <span data-bs-toggle="modal" data-bs-target="#registerModal"><ins>Register now !</ins></span>
+                    <span data-bs-toggle="modal" data-bs-target="#registerModal"><ins>S'inscrire !</ins></span>
                 </div>
             </div>
         </div>
@@ -55,6 +55,7 @@
                     <input type="password" class="form-control" id="labelPasswordRegister" placeholder="Enter password">
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="indexController.register()">Validate</button>
                 </div>
             </div>
         </div>

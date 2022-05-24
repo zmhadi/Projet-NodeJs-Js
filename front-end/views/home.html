@@ -1,31 +1,84 @@
-<div class="container" style="height: 100vh; width: 100vw;">
+<div class="container-fluid" style="height: 100vh; width: 100vw;">
     <div class="row">
         <div class="card" style="max-height: 50%">
-            <div id="cardTitle" class="card-title" style="text-align: center">
-
+            <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">
+                <div id="cardTitle"></div>
+                <span style="font-size: 15px;color: grey;" data-bs-toggle="modal" data-bs-target="#editModal">
+                   <ins>Editer mon compte</ins>  <i class='far fa-edit' style="text-align: right !important;"></i>
+                </span>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <img src="../res/face.png" alt="" id="imageUser" >
-                    </div>
-                    <div class="col">
-                        <div style=" padding-left:5px">
-                            <label for="labelPseudoEdit" class="form-label">Pseudo</label>
-                            <input type="text" class="form-control" id="labelPseudoEdit" placeholder="" disabled>
-                            <label id="mailEdit" for="labelMailEdit" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="labelMailEdit" aria-describedby="emailHelp" placeholder="" disabled>
-                            <label for="labelPasswordEdit" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="labelPasswordEdit" placeholder="" disabled>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card" style="max-height: 50%">
+            <div class="card-title" style="font-size: 20px; color: grey;text-align: center;"> Vos dernières activités</div>
+            <div class="card-body" id="infoUser">
+                <div style="font-size: 12px;color: grey;">Vous avez une moyenne de <span id="rateComments"></span></div>
+                <div style="font-size: 12px;color: grey;">Dernier commentaire </br><span id="lastComments"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card" style="max-height: 50%">
+            <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">Speed-dating</div>
+            <div class="card-body" id="meetSession">
+            </div>
+        </div>
+    </div>
+
+    <div class="row card">
+        <div class="col">
+            <div class="card" style="max-height: 50%">
+                <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">Prochaines rencontres</div>
+                <div class="card-body" id="unknowUser">
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="max-height: 50%">
+                <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">Dernières rencontres</div>
+                <div class="card-body" id="knowUser">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="padding: 0 10px 10px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Editer mon compte</h5>
+                    <button id="closeModalEdit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <img src="../res/face.png" alt="" id="imageUser" >
                         </div>
-                        <button id="buttonEdit" style="width: 100%" type="button" class="btn btn-secondary" onclick="homeController.edit()">Edit profil</button>
+                        <div class="col">
+                            <div style=" padding-left:5px">
+                                <label for="labelPseudoEdit" class="form-label">Pseudo</label>
+                                <input type="text" class="form-control" id="labelPseudoEdit" placeholder="" disabled>
+                                <label id="mailEdit" for="labelMailEdit" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="labelMailEdit" aria-describedby="emailHelp" placeholder="" disabled>
+                                <label for="labelPasswordEdit" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="labelPasswordEdit" placeholder="" disabled>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="buttonEdit" style="width: 100%" type="button" class="btn btn-secondary" onclick="homeController.edit()">Editer mon compte</button>
+
                 </div>
             </div>
         </div>
     </div>
-        <div class="card">
-        </div>
-    </div>
 
 </div>
+

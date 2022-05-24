@@ -6,11 +6,9 @@ class IndexController extends BaseController {
     }
 
     async connection() {
-        //console.log({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value})
         await this.model.connection({mail: $("#labelMailLogin").value , password: $("#labelPasswordLogin").value})
         console.log('connection',this.model.getStatus())
         this.userMail = $("#labelMailLogin").value
-        //console.log(this.userMail, 'mail')
         if(this.model.getStatus() == 200){
             navigate("home")
         }
@@ -68,7 +66,7 @@ class IndexController extends BaseController {
 
         if(this.model.getStatus() == 200){
             $("#closeModal").click()
-            navigate("home")
+            navigate("index")
         }
     }
 }

@@ -39,17 +39,17 @@ exports.getUserByMail = async function (mail) {
  * add new User, checks that the User does not exist
  * @param req - The params send by user with HTML request
  */
-exports.add = async function (req) {
+exports.addUser = async function (data) {
   const DAOUsers = require('./DAO/DAOUsers')
-  const { firstName, lastName, password } = req.body
+  const { mail, password, pseudo } = data
 
-  if (!firstName) return {status: 422, message:'FirstName required.'}
-  if (!lastName) return  {status: 422, message:'LastName required.'}
-  if (!password) return {status: 422, message:'Password required.'}
+  if (!mail) return {status: 422, message:'Mail required.'}
+  if (!password) return  {status: 422, message:'Password required.'}
+  if (!pseudo) return {status: 422, message:'Pseudo required.'}
 
-  const user = await DAOUsers.find(firstName)
+  const user = await DAOUsers.findUserByMail(mail)
   if (user.length === 0){
-      await DAOUsers.add(firstName, lastName, password)
+      await DAOUsers.addUser(mail, password, pseudo)
       return {status: 200, message:'User Added !'}
   } else {
       return {status: 409, message:'User already exist'} //conflict
@@ -59,16 +59,20 @@ exports.add = async function (req) {
  * update User with id, checks that the User exist
  * @param req - The params send by user with HTML request
  */
-exports.updateUser = (id, data) => {
-  const foundUser = users.find((user) => user.id == id);
-
+exports.updateUser = async function (mail, data) {
+  console.log('debug', data)
+  const DAOUsers = require('./DAO/DAOUsers')
+  const foundUser = await DAOUsers.findUserByMail(mail)
   if (!foundUser) {
     throw new Error('User not found');
   }
+  foundUser[0].pseudo = data.pseudo || foundUser.pseudo;
+  foundUser[0].mail = data.mail || foundUser.mail;
+  foundUser[0].password = data.password ? generateHashedPassword(data.password) : foundUser[0].password;
+  console.log('debug', foundUser)
 
-  foundUser.firstName = data.firstName || foundUser.firstName;
-  foundUser.lastName = data.lastName || foundUser.lastName;
-  foundUser.password = data.password ? generateHashedPassword(data.password) : foundUser.password;
+  await DAOUsers.updateUser(foundUser[0].id, foundUser[0].mail, foundUser[0].password, foundUser[0].pseudo)
+  return true;
 };
 /**
  * delete User with id, checks that the User exist

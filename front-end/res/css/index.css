@@ -4,6 +4,7 @@
 }
 .card {
     padding: 10px;
+    border-radius: 5px;
 }
 .toast {
     background-color: white;
@@ -21,6 +22,9 @@ small {
 .btn {
     margin: 5px;
 }
+.row {
+    margin: 0;
+}
 #buttonEdit {
     background-color: grey;
     border-color: grey;
@@ -34,4 +38,28 @@ small {
     #imageUser {
         width: 50%;
     }
+}
+.loader{
+    background: url('../loader.png') 50% 50% no-repeat rgba(255, 255, 255, 0.8);
+    cursor: wait;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+.loader h1{
+    background: none;
+    border: none;
+    color: #458976;
+    font-size: 22px;
+    font-family: "Open Sans",sans-serif;
+    font-variant: small-caps;
+    font-weight: 700;
+    height: 700px;
+    line-height: 700px;
+    margin: 0 0 10px;
+    padding: 0;
+    text-align: center;
 }

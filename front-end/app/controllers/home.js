@@ -10,28 +10,31 @@ class HomeController extends BaseController {
         $("#labelPseudoEdit").placeholder= user[0].pseudo
         $("#labelMailEdit").placeholder= user[0].mail
         $("#labelPasswordEdit").placeholder= "**********"
-        $("#cardTitle").innerHTML = `Bonjour <span style="font-weight: bold; color:teal">${user[0].pseudo}</span>`
-        console.log(user[0])
+        $("#cardTitle").innerHTML = `Bonjour <span style="font-weight: bold; color:teal; text-transform: capitalize;">${user[0].pseudo}</span>`
     }
 
     async edit() {
         $("#labelPseudoEdit").removeAttribute("disabled")
         $("#labelMailEdit").removeAttribute("disabled")
         $("#labelPasswordEdit").removeAttribute("disabled")
-        $("#buttonEdit").innerText="Apply"
+        $("#buttonEdit").innerText="Appliquer changement(s)"
         $("#buttonEdit").setAttribute('onclick','homeController.apply()')
+        $("#buttonEdit").style.borderColor="teal"
+        $("#buttonEdit").style.backgroundColor="teal"
     }
 
     async apply() {
-        console.log('hehe')
-        console.log(this.model.editUser(this.model.getUserMail(), {pseudo : $("#labelPseudoEdit").value,
-                                                                        mail: $("#labelMailEdit").value,
-                                                                        password: $("#labelPasswordEdit").value}))
+        this.model.editUser(this.model.getUserMail(), {pseudo : $("#labelPseudoEdit").value || $("#labelPseudoEdit").placeholder,
+                                                            mail: $("#labelMailEdit").value || $("#labelMailEdit").placeholder,
+                                                            password: $("#labelPasswordEdit").value || $("#labelPasswordEdit").placeholder})
         $("#labelPseudoEdit").setAttribute("disabled", "")
         $("#labelMailEdit").setAttribute("disabled", "")
         $("#labelPasswordEdit").setAttribute("disabled", "")
-        $("#buttonEdit").innerText="Edit profil"
+        $("#buttonEdit").style.borderColor="grey"
+        $("#buttonEdit").style.backgroundColor="grey"
+        $("#buttonEdit").innerText="Editer mon compte"
         $("#buttonEdit").setAttribute('onclick','homeController.edit()')
+        $("#closeModalEdit").click()
         await this.load()
     }
 }

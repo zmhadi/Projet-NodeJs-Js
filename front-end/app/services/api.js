@@ -33,12 +33,10 @@ class Api {
                     headers: this.myHeaders,
                     body: JSON.stringify({mail: data.mail, password: data.password})
                 });
-                console.log('hehehe')
                 this.status = rawResponse.status || 'undefined'
                 const content = await rawResponse.json()
                 if(content[0] != undefined) {
                     this.responseError = content[0].param
-                    console.log(content)
                 }
                 localStorage.setItem("token", 'Bearer '+content.token)
                 localStorage.setItem("mail", data.mail)
@@ -93,7 +91,6 @@ class Api {
                 });
                 this.status = rawResponse.status || 'undefined'
                 const content = await rawResponse.json()
-                console.log(content)
             } catch (e) {
                 console.log(e)
             }
