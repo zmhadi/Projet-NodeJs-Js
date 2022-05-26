@@ -35,7 +35,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).send(JSON.stringify(errors.array()))
     }
-    console.log('debug', req.body)
     userRepository.addUser(req.body).then(r => {
       res.status(r.status).send(r.message)
     })

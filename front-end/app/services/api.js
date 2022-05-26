@@ -45,6 +45,10 @@ class Api {
             }
         })();
     }
+    deconnection() {
+        localStorage.removeItem("token")
+        localStorage.removeItem("mail")
+    }
 
     register(data) {
         return (async () => {
@@ -89,8 +93,7 @@ class Api {
                     headers: this.myHeaders,
                     body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
                 });
-                this.status = rawResponse.status || 'undefined'
-                const content = await rawResponse.json()
+                this.status = rawResponse.status
             } catch (e) {
                 console.log(e)
             }

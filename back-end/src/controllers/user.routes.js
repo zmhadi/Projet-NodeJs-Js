@@ -10,10 +10,15 @@ const guard = require('express-jwt-permissions')({
 const adminRole = 'ADMIN';
 const adminOrMemberRoles = [[adminRole], ['MEMBER']];
 
-router.get('/',/*guard.check(adminOrMemberRoles),*/ (req, res) => {
-  console.log(req.headers)
-  userRepository.getAllUsers().then(r => {
-        res.send(r)
+router.get('/newGuest/:mail', (req, res) => {
+  userRepository.getNewGuest().then(r => {
+    res.status(r.status).send(r.message)
+  })
+});
+
+router.get('/oldGuest/:mail', (req, res) => {
+  userRepository.getOldGuest().then(r => {
+    res.status(r.status).send(r.message)
   })
 });
 
@@ -30,6 +35,7 @@ router.get('/:mail', (req, res) => {
 
 router.post(
   '/',
+  guard.check(adminRole),
   body('firstName').notEmpty(),
   body('lastName').notEmpty(),
   body('password').notEmpty().isLength({ min: 5 }),
@@ -56,10 +62,10 @@ router.put('/:mail', (req, res) => {
   })
 });
 
-router.delete('/:id', guard.check(adminRole), (req, res) => {
+/* router.delete('/:id', guard.check(adminRole), (req, res) => {
   userRepository.remove(req).then(r => {
     res.status(r.status).send(r.message)
   })
-});
+}); */
 
 exports.initializeRoutes = () => router;

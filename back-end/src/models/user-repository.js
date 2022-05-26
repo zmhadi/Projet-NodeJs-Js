@@ -2,18 +2,28 @@ const { users } = require('./db');
 const uuid = require('uuid');
 const { generateHashedPassword } = require('../security/crypto');
 
-exports.getAllUsers = async function () {
+exports.getOldGuest = async function (user) {
   const DAOUsers = require('./dao/DAOUsers')
-
-    const allUsers = await DAOUsers.getAll()
-    const arrayUsers = []
-    for await (let user of allUsers) {
-        arrayUsers.push(user)
+    const guests = await DAOUsers.getOldGuest(user)
+    const arrayGuests = []
+    for await (let guest of guests) {
+      arrayGuests.push(guest)
     }
-    return arrayUsers
+    return arrayGuests
 };
 
-exports.getUserByFirstName = async function (firstName) {
+exports.getNewGuest = async function (user) {
+  const DAOUsers = require('./dao/DAOUsers')
+
+    const guests = await DAOUsers.getNewGuest(user)
+    const arrayGuests = []
+    for await (let guest of guests) {
+      arrayGuests.push(guest)
+    }
+    return arrayGuests
+};
+
+/* exports.getUserByFirstName = async function (firstName) {
   const DAOUsers = require('./dao/DAOUsers')
 
     const user = await DAOUsers.find(firstName)
@@ -22,7 +32,7 @@ exports.getUserByFirstName = async function (firstName) {
     } else {
         return {status: 404, message:'User not exist'}
     }
-};
+}; */
 
 exports.getUserByMail = async function (mail) {
   const DAOUsers = require('./dao/DAOUsers')
@@ -60,7 +70,6 @@ exports.addUser = async function (data) {
  * @param req - The params send by user with HTML request
  */
 exports.updateUser = async function (mail, data) {
-  console.log('debug', data)
   const DAOUsers = require('./DAO/DAOUsers')
   const foundUser = await DAOUsers.findUserByMail(mail)
   if (!foundUser) {
@@ -69,7 +78,6 @@ exports.updateUser = async function (mail, data) {
   foundUser[0].pseudo = data.pseudo || foundUser.pseudo;
   foundUser[0].mail = data.mail || foundUser.mail;
   foundUser[0].password = data.password ? generateHashedPassword(data.password) : foundUser[0].password;
-  console.log('debug', foundUser)
 
   await DAOUsers.updateUser(foundUser[0].id, foundUser[0].mail, foundUser[0].password, foundUser[0].pseudo)
   return true;

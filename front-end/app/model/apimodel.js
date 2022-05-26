@@ -3,6 +3,10 @@ class Apimodel {
         this.api = new Api()
     }
 
+    deconnection() {
+        this.api.deconnection()
+    }
+
     async connection(data) {
         try {
             return await this.api.connection(data)

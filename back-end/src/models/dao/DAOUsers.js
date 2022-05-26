@@ -3,8 +3,17 @@ const db = require('../db')
 /**
  * return all Users from the database
  */
-const getAll = async function () {
-    return db.select('*').from('Users')
+ const getOldGuest = async function (user) {
+    console.log('debug getOldGuest', await db.select('*').from('Guest').where('user', '!=', user))
+    await db.select('*').from('Guest').where('user', '!=', user)
+}
+
+/**
+ * return all Users from the database
+ */
+const getNewGuest = async function (user) {
+    console.log('debug getNewGuest', await db.select('*').from('Guest').where({user: user}))
+    await db.select('*').from('Guest').where({user: user})
 }
 
 /**
@@ -12,7 +21,7 @@ const getAll = async function () {
  * @params {string} pseudo - pseudo of User
  */
 const findUserByMail = async function (mail) {
-    return db.select('*').from('Users').where({mail: mail})
+    return await db.select('*').from('Users').where({mail: mail})
 }
 
 /**
@@ -50,12 +59,12 @@ const remove = async function (id) {
  * @params {string} password - password of user
  */
 const updateUser = async function (id, mail, password, pseudo) {
-    console.log('debug', id, mail, pseudo, password)
     await db.from("Users").where({id: id}).update({mail: mail, password: password, pseudo: pseudo})
 }
 
 module.exports = {
-    getAll,
+    getNewGuest,
+    getOldGuest,
     findUserByMail,
     addUser,
     //remove,

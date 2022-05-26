@@ -2,7 +2,12 @@ class HomeController extends BaseController {
     constructor() {
         super()
         this.model = new Apimodel()
-        this.load()
+        this.load().then()
+    }
+
+    deconnection() {
+        navigate("index")
+        this.model.deconnection()
     }
 
     async load() {
@@ -24,9 +29,13 @@ class HomeController extends BaseController {
     }
 
     async apply() {
-        this.model.editUser(this.model.getUserMail(), {pseudo : $("#labelPseudoEdit").value || $("#labelPseudoEdit").placeholder,
-                                                            mail: $("#labelMailEdit").value || $("#labelMailEdit").placeholder,
-                                                            password: $("#labelPasswordEdit").value || $("#labelPasswordEdit").placeholder})
+        await this.model.editUser(this.model.getUserMail(), {
+            pseudo: $("#labelPseudoEdit").value || $("#labelPseudoEdit").placeholder,
+            mail: $("#labelMailEdit").value || $("#labelMailEdit").placeholder,
+            password: $("#labelPasswordEdit").value || $("#labelPasswordEdit").placeholder
+        })
+        console.log('edit user', this.model.getStatus())
+
         $("#labelPseudoEdit").setAttribute("disabled", "")
         $("#labelMailEdit").setAttribute("disabled", "")
         $("#labelPasswordEdit").setAttribute("disabled", "")
