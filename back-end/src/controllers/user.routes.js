@@ -11,13 +11,13 @@ const adminRole = 'ADMIN';
 const adminOrMemberRoles = [[adminRole], ['MEMBER']];
 
 router.get('/newGuest/:mail', (req, res) => {
-  userRepository.getNewGuest().then(r => {
+  userRepository.getNewGuest(req.params.mail).then(r => {
     res.status(r.status).send(r.message)
   })
 });
 
 router.get('/oldGuest/:mail', (req, res) => {
-  userRepository.getOldGuest().then(r => {
+  userRepository.getOldGuest(req.params.mail).then(r => {
     res.status(r.status).send(r.message)
   })
 });

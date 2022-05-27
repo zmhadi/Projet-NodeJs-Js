@@ -12,6 +12,7 @@ class HomeController extends BaseController {
 
     async load() {
         const user = await this.model.getUser(this.model.getUserMail())
+        await this.historyMeet()
         $("#labelPseudoEdit").placeholder= user[0].pseudo
         $("#labelMailEdit").placeholder= user[0].mail
         $("#labelPasswordEdit").placeholder= "**********"
@@ -45,6 +46,80 @@ class HomeController extends BaseController {
         $("#buttonEdit").setAttribute('onclick','homeController.edit()')
         $("#closeModalEdit").click()
         await this.load()
+    }
+
+    async historyMeet() {
+        async function getAge(date) {
+            var diff = Date.now() - date.getTime();
+            var age = new Date(diff);
+            return Math.abs(age.getUTCFullYear() - 1970);
+        }
+
+        $('#knowUser').innerHTML = ''
+        $('#unknowUser').innerHTML = ''
+        const oldGuest = await this.model.getOldGuest(this.model.getUserMail())
+        const newGuest = await this.model.getNewGuest(this.model.getUserMail())
+        for(let i = oldGuest.length-1; i>=0; i--) {
+            if(i >= oldGuest.length-2) {
+                if (i == 0) {
+                    $('#knowUser').innerHTML += `<div>
+                                                            <div style="color: teal; font-weight: bold;">
+                                                                ${oldGuest[i].firstName} ${oldGuest[i].lastName}
+                                                                <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
+                                                                    , ${await getAge(new Date(oldGuest[i].birthDate))} ans
+                                                                </span>
+                                                            </div>
+                                                            <div style="font-style: italic;">" ${oldGuest[i].note} "</div>
+                                                            <div style="color: grey; font-size: 11px">Le ${oldGuest[i].meetDate}</div>
+                                                        </div>`
+                } else {
+                    $('#knowUser').innerHTML += `<div style="border-bottom: 1px solid lightgrey; padding-bottom: 10px; padding-top: 7px;">
+                                                            <div style="color: teal; font-weight: bold;">
+                                                                ${oldGuest[i].firstName} ${oldGuest[i].lastName} 
+                                                                <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
+                                                                    , ${await getAge(new Date(oldGuest[i].birthDate))} ans
+                                                                </span>
+                                                            </div>
+                                                            <div style="font-style: italic;">" ${oldGuest[i].note} "</div>
+                                                            <div style="color: grey; font-size: 11px">Le ${oldGuest[i].meetDate}</div>
+                                                        </div>`
+                }
+            }
+        }
+        if(oldGuest.length-2 > 0) {
+            $("#knowUser").innerHTML += `<div style="color: grey; font-size: 11px; font-weight: initial; padding-top: 10px;">
+                                                        ${oldGuest.length-2} autre(s) rencontre(s) passée(s)
+                                                      </div>`
+        }
+        for(let i = newGuest.length-1; i>=0; i--) {
+            if(i >= newGuest.length-2) {
+                if(i == 0) {
+                    $('#unknowUser').innerHTML += `<div>
+                                                        <div style="color: teal; font-weight: bold;">
+                                                            ${newGuest[i].firstName} ${newGuest[i].lastName}
+                                                            <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
+                                                                , ${await getAge(new Date(newGuest[i].birthDate))} ans
+                                                            </span>
+                                                        </div>
+                                                    </div>`
+                }
+                else {
+                    $('#unknowUser').innerHTML += `<div style="border-bottom: 1px solid lightgrey; padding-bottom: 10px; padding-top: 7px;">
+                                                        <div style="color: teal; font-weight: bold;">
+                                                            ${newGuest[i].firstName} ${newGuest[i].lastName}
+                                                            <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
+                                                                , ${await getAge(new Date(newGuest[i].birthDate))} ans
+                                                            </span>
+                                                        </div>
+                                                    </div>`
+                }
+            }
+        }
+        if(newGuest.length-2 > 0) {
+            $("#unknowUser").innerHTML += `<div style="color: grey; font-size: 11px; font-weight: initial; padding-top: 10px;">
+                                                        ${newGuest.length-2} autre(s) rencontre(s) suggérée(s)
+                                                      </div>`
+        }
     }
 }
 

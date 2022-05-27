@@ -6,10 +6,13 @@
                 vertical-align: baseline;
                 height: inherit;">
         <div class="row" style="padding-top: 50px;">
-            <div class="card">
+            <div class="card" style="width: 95%; margin: auto;">
                 <div style="width: 100%; text-align-last: center">
                     <img src="../res/logo.png"
-                         style="width: 50px;height: 50px;">
+                         style="width: 250px;height: 50px; margin-bottom: 30px">
+                </div>
+                <div style="width: 100%; text-align-last: right; color: teal; font-size: 14px; font-style: italic; padding-right: 10px; font-family: 'Brush Script MT'; margin-bottom: 10px">
+                    Par Zakariya
                 </div>
                 <!--<div style="width: 100%; text-align-last: center; color: teal;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -17,9 +20,9 @@
                     </svg>
                 </div>-->
                 <label for="labelMailLogin" class="form-label">Email</label>
-                <input type="email" class="form-control" id="labelMailLogin" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control" id="labelMailLogin" aria-describedby="emailHelp" placeholder="Entrer l'email">
                 <label for="labelPasswordLogin" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="labelPasswordLogin" placeholder="Enter password">
+                <input type="password" class="form-control" id="labelPasswordLogin" placeholder="Entrer le mot de passe">
                 <button class="btn btn-primary" onclick="indexController.connection()">Se connecter</button>
                 <div style="text-align: center; padding-top: 5px">
                     <span data-bs-toggle="modal" data-bs-target="#registerModal"><ins>S'inscrire !</ins></span>
@@ -41,21 +44,21 @@
     </div>
     <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="padding: 0 10px 10px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Register</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Inscription</h5>
                     <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <label for="labelPseudoRegister" class="form-label">Pseudo</label>
-                    <input type="text" class="form-control" id="labelPseudoRegister" placeholder="Enter pseudo">
+                    <input type="text" class="form-control" id="labelPseudoRegister" placeholder="Entrer le pseudo">
                     <label id="mailRegister" for="labelMailRegister" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="labelMailRegister" aria-describedby="emailHelp" placeholder="Enter email">
-                    <label for="labelPasswordRegister" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="labelPasswordRegister" placeholder="Enter password">
+                    <input type="email" class="form-control" id="labelMailRegister" aria-describedby="emailHelp" placeholder="Entrer l'email">
+                    <label for="labelPasswordRegister" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="labelPasswordRegister" placeholder="Entrer le mot de passe">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="indexController.register()">Validate</button>
+                    <button type="button" class="btn btn-primary" style="width: 100%" onclick="indexController.register()">S'inscrire</button>
                 </div>
             </div>
         </div>

@@ -3,17 +3,15 @@ const db = require('../db')
 /**
  * return all Users from the database
  */
- const getOldGuest = async function (user) {
-    console.log('debug getOldGuest', await db.select('*').from('Guest').where('user', '!=', user))
-    await db.select('*').from('Guest').where('user', '!=', user)
+ const getOldGuest = async function (userMail) {
+    return await db.select('*').from('Guest').where({userMail: userMail})
 }
 
 /**
  * return all Users from the database
  */
-const getNewGuest = async function (user) {
-    console.log('debug getNewGuest', await db.select('*').from('Guest').where({user: user}))
-    await db.select('*').from('Guest').where({user: user})
+const getNewGuest = async function (userMail) {
+   return await db.select('*').from('Guest').where('userMail', '!=', userMail)
 }
 
 /**

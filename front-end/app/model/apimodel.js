@@ -68,4 +68,21 @@ class Apimodel {
         }
     }
 
+    getOldGuest(mail) {
+        try {
+            return this.api.getOldGuest(mail)
+        }
+        catch {
+            return undefined
+        }
+    }
+
+    getNewGuest(mail) {
+        try {
+            return this.api.getNewGuest(mail)
+        }
+        catch {
+            return undefined
+        }
+    }
 }

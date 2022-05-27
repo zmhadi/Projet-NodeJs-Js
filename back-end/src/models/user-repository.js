@@ -2,25 +2,33 @@ const { users } = require('./db');
 const uuid = require('uuid');
 const { generateHashedPassword } = require('../security/crypto');
 
-exports.getOldGuest = async function (user) {
+exports.getOldGuest = async function (userMail) {
   const DAOUsers = require('./dao/DAOUsers')
-    const guests = await DAOUsers.getOldGuest(user)
+    const guests = await DAOUsers.getOldGuest(userMail)
     const arrayGuests = []
-    for await (let guest of guests) {
-      arrayGuests.push(guest)
+    if(guests != undefined) {
+      for await (let guest of guests) {
+        arrayGuests.push(guest)
+      }
+      return {status: 200, message: arrayGuests}
+    } else {
+        return {status: 404, message:'Undefined'}
     }
-    return arrayGuests
 };
 
-exports.getNewGuest = async function (user) {
+exports.getNewGuest = async function (userMail) {
   const DAOUsers = require('./dao/DAOUsers')
 
-    const guests = await DAOUsers.getNewGuest(user)
+    const guests = await DAOUsers.getNewGuest(userMail)
     const arrayGuests = []
-    for await (let guest of guests) {
-      arrayGuests.push(guest)
+    if(guests != undefined) {
+      for await (let guest of guests) {
+        arrayGuests.push(guest)
+      }
+      return {status: 200, message: arrayGuests}
+    } else {
+        return {status: 404, message:'Undefined'}
     }
-    return arrayGuests
 };
 
 /* exports.getUserByFirstName = async function (firstName) {

@@ -4,7 +4,6 @@ class Api {
         this.status = 500
         this.token = localStorage.getItem("token")
         this.userMail = localStorage.getItem("mail")
-        this.user= {}
         this.myHeaders = new Headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -45,9 +44,9 @@ class Api {
             }
         })();
     }
+
     deconnection() {
-        localStorage.removeItem("token")
-        localStorage.removeItem("mail")
+        localStorage.clear()
     }
 
     register(data) {
@@ -94,6 +93,34 @@ class Api {
                     body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
                 });
                 this.status = rawResponse.status
+            } catch (e) {
+                console.log(e)
+            }
+        })();
+    }
+
+    getOldGuest(mail) {
+        return (async () => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/oldGuest/${mail}`, {
+                    method: 'GET',
+                    headers: this.myHeaders,
+                });
+                return await rawResponse.json()
+            } catch (e) {
+                console.log(e)
+            }
+        })();
+    }
+
+    getNewGuest(mail) {
+        return (async () => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/newGuest/${mail}`, {
+                    method: 'GET',
+                    headers: this.myHeaders,
+                });
+                return await rawResponse.json()
             } catch (e) {
                 console.log(e)
             }
