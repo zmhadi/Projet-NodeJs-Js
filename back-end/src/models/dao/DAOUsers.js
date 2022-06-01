@@ -1,40 +1,20 @@
 const db = require('../db')
 
 /**
- * return all Users from the database
- */
- const getOldGuest = async function (id) {
-    const user = await findUserById(id)
-    return await db.select('*').from('Guest').where({userMail: user[0].mail})
-}
-
-/**
- * return all Users from the database
- */
-const getNewGuest = async function (id) {
-   const user = await findUserById(id)
-   return await db.select('*').from('Guest').where('userMail', '!=', user[0].mail)
-}
-
-/**
- * return one User with id from the database
- * @params {string} pseudo - pseudo of User
+ * return one User from the database
+ * @params {string} mail - mail of User to find
  */
 const findUserByMail = async function (mail) {
     return await db.select('*').from('Users').where({mail: mail})
 }
 
+/**
+ * return one User from the database
+ * @params {int} id - id of User
+ */
 const findUserById = async function (id) {
     return await db.select('*').from('Users').where({id: id})
 }
-
-/**
- * return one User with id from the database
- * @params {int} id - id of User
- */
-/*const findWithId = async function (id) {
-    return db.select('*').from('Users').where({id: id})
-}*/
 
 /**
  * add new User in database
@@ -47,15 +27,6 @@ const addUser = async function ( mail, password, pseudo) {
 }
 
 /**
- * delete User in the database
- * @params {int} id - id of User
- */
-/*
-const remove = async function (id) {
-    await db.delete().from('Users').where({id: id})
-}
-*/
-/**
  * update User in database
  * @params {int} id - id of User
  * @params {string} pseudo - name of user
@@ -64,6 +35,32 @@ const remove = async function (id) {
  */
 const updateUser = async function (id, mail, password, pseudo) {
     await db.from("Users").where({id: id}).update({mail: mail, password: password, pseudo: pseudo})
+}
+
+/**
+ * delete User in the database
+ * @params {int} id - id of User
+ */
+/*
+const removeUser = async function (id) {
+    await db.delete().from('Users').where({id: id})
+}
+*/
+
+/**
+ * return all Guests who are never meet with the user from the database
+ * @params {int} id - id of User
+ */
+ const getOldGuest = async function (id) {
+    return await db.select('*').from('Guests').where({userId: id})
+}
+
+/**
+ * return all Guests who are meet from the database
+ * @params {int} id - id of User
+ */
+const getNewGuest = async function (id) {
+   return await db.select('*').from('Guests').where('userId', '!=', id)
 }
 
 module.exports = {

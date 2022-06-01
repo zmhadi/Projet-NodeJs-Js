@@ -83,13 +83,18 @@
         <div class="modal-dialog">
             <div class="modal-content" style="padding: 0 10px 10px;">
                 <div class="modal-header">
-                    <div class="input-group">
-                        <input type="text" class="form-control" style="width: 100%; padding-right: 5px; padding-left: 5px;">
-                    </div>
+                    <h5 class="modal-title" style="color: teal;">
+                        Ajouter une rencontre
+                    </h5>
                     <button id="closeModalCreateSession" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <button id="buttonAddGuest" style="width: 100%; background-color: lightgrey" type="button" class="btn btn-secondary">+</button>
+                    <label for="labelAddGuestFirstName" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" id="labelAddGuestFirstName" aria-describedby="emailHelp" placeholder="Entrer le prénom">
+                    <label for="labelAddGuestLastName" class="form-label">Nom de famille</label>
+                    <input type="text" class="form-control" id="labelAddGuestLastName" aria-describedby="emailHelp" placeholder="Entrer le nom de famille">
+                    <label for="labelAddGuestBirthDate" class="form-label">Date de naissance</label>
+                    <input type="date" class="form-control" id="labelAddGuestBirthDate" aria-describedby="emailHelp" placeholder="Entrer la date de naissance">
                 </div>
                 <div class="modal-footer">
                     <button id="buttonCreateSession" style="width: 100%" type="button" class="btn btn-secondary" onclick="">Ajouter la session</button>
