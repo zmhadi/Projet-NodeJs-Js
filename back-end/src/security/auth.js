@@ -1,9 +1,13 @@
-const { sign } = require('jsonwebtoken');
+const { sign, verify } = require('jsonwebtoken');
 
-exports.generateAuthToken = (userId, firstName, roles) => {
+exports.generateAuthToken = (userId, mail) => {
   return sign(
-    { userId, firstName, roles },
+    { userId, mail },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRES_IN },
   );
 };
+
+exports.extractUserId = (token, secret) => {
+  return verify(token, secret);
+}

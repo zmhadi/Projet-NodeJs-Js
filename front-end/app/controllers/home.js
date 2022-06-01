@@ -68,6 +68,7 @@ class HomeController extends BaseController {
                                                                 <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
                                                                     , ${await getAge(new Date(oldGuest[i].birthDate))} ans
                                                                 </span>
+                                                                <span style="position:absolute;right: 0;padding-right: 25px;">${oldGuest[i].score}<span style="color:grey; font-weight: initial;">/10</span></span>
                                                             </div>
                                                             <div style="font-style: italic;">" ${oldGuest[i].note} "</div>
                                                             <div style="color: grey; font-size: 11px">Le ${oldGuest[i].meetDate}</div>
@@ -79,6 +80,14 @@ class HomeController extends BaseController {
                                                                 <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
                                                                     , ${await getAge(new Date(oldGuest[i].birthDate))} ans
                                                                 </span>
+                                                                <span style="position:absolute;right: 0;padding-right: 25px;">${oldGuest[i].score}<span style="color:grey; font-weight: initial;">/10</span></span>
+                                                                <div class="dropdown">
+                                                                  <button class="btn btn-secondary dropdown-toggle" style="position: absolute; right: 0; background-color: inherit; color: teal; box-shadow: initial; -webkit-box-shadow: initial" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                                    <li><a class="dropdown-item" href="#">Modifier</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Supprimer</a></li>
+                                                                  </ul>
+                                                                </div>
                                                             </div>
                                                             <div style="font-style: italic;">" ${oldGuest[i].note} "</div>
                                                             <div style="color: grey; font-size: 11px">Le ${oldGuest[i].meetDate}</div>

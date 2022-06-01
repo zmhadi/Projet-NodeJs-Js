@@ -23,6 +23,8 @@ router.get('/oldGuest/:mail', (req, res) => {
 });
 
 router.get('/:mail', (req, res) => {
+  const token = req.headers.authorization.split(' ')
+  console.log('debug get', token[1])
   const foundUser = userRepository.getUserByMail(req.params.mail);
   if (!foundUser) {
     throw new Error('User not found');

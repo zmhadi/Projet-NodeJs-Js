@@ -83,10 +83,13 @@
         <div class="modal-dialog">
             <div class="modal-content" style="padding: 0 10px 10px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropCreateSession">Editer mon compte</h5>
+                    <div class="input-group">
+                        <input type="text" class="form-control" style="width: 100%; padding-right: 5px; padding-left: 5px;">
+                    </div>
                     <button id="closeModalCreateSession" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <button id="buttonAddGuest" style="width: 100%; background-color: lightgrey" type="button" class="btn btn-secondary">+</button>
                 </div>
                 <div class="modal-footer">
                     <button id="buttonCreateSession" style="width: 100%" type="button" class="btn btn-secondary" onclick="">Ajouter la session</button>

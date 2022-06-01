@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userRepository = require('../models/user-repository');
 const { passwordsAreEqual, generateHashedPassword } = require('../security/crypto');
-const { generateAuthToken } = require('../security/auth');
+const { generateAuthToken, extractUserId } = require('../security/auth');
 const { body, validationResult } = require('express-validator');
 const { validateBody } = require('./validation/route.validator');
 
@@ -20,7 +20,11 @@ router.post(
     if (!user || !user && !passwordsAreEqual(password, user.message[0].password)) {
       return res.status(401).send('Unauthorized');
     }
-    const token = generateAuthToken(user.id, user.firstName, user.roles);
+    console.log('debug token', user)
+    const token = generateAuthToken(user.message[0].id, user.message[0].mail);
+    const extract = extractUserId(token, process.env.JWT_SECRET)
+    console.log('debug extract', extract)
+    console.log('debug decoded', extract.userId)
     res.json({ token });
   }
 );
