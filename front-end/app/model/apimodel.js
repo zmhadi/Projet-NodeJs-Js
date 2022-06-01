@@ -33,6 +33,15 @@ class Apimodel {
         }
     }
 
+    async addGuest(data) {
+        try {
+            return await this.api.addGuest(data)
+        }
+        catch {
+            return undefined
+        }
+    }
+
     getStatus() {
         try {
             return this.api.getStatus()

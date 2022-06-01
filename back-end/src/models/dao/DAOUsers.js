@@ -17,6 +17,14 @@ const findUserById = async function (id) {
 }
 
 /**
+ * return a list of meet for a guest from the database
+ * @params {object} data - contain firstName, lastName and birthDate
+ */
+const findGuestByIdentity = async function(firstName, lastName, birthDate) {
+    return await db.select('*').from('Guests').where({firstName: firstName, lastName: lastName, birthDate: birthDate})
+}
+
+/**
  * add new User in database
  * @params {string} mail - mail of user
  * @params {string} pseudo - pseudo of user
@@ -24,6 +32,17 @@ const findUserById = async function (id) {
  */
 const addUser = async function ( mail, password, pseudo) {
     await db.insert({mail: mail, password: password, pseudo: pseudo}).into('Users')
+}
+
+/**
+ * add new Guest in database
+ * @params {int} id - id of user
+ * @params {string} firstName - firstName of guest
+ * @params {string} lastName - lastName of guest
+ * @params {string} birthDate - birthDate of guest
+ */
+const addGuest = async function (id, firstName, lastName, birthDate) {
+    await db.insert({userId: id, firstName: firstName, lastName: lastName, birthDate: birthDate, meetDate: '', score: '', note: ''}).into('Guests')
 }
 
 /**
@@ -52,7 +71,7 @@ const removeUser = async function (id) {
  * @params {int} id - id of User
  */
  const getOldGuest = async function (id) {
-    return await db.select('*').from('Guests').where({userId: id})
+    return await db.select('*').from('Guests').where({userId: id, hasMeet: 'true'})
 }
 
 /**
@@ -60,7 +79,7 @@ const removeUser = async function (id) {
  * @params {int} id - id of User
  */
 const getNewGuest = async function (id) {
-   return await db.select('*').from('Guests').where('userId', '!=', id)
+   return await db.select('*').from('Guests').where({userId: id, hasMeet: 'false'})
 }
 
 module.exports = {
@@ -68,7 +87,9 @@ module.exports = {
     getOldGuest,
     findUserByMail,
     findUserById,
+    findGuestByIdentity,
     addUser,
+    addGuest,
     //remove,
     updateUser,
     //findWithId

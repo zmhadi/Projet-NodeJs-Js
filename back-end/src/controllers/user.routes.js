@@ -19,7 +19,7 @@ router.get('/newGuest', (req, res) => {
   })
 }) 
 
-/* router.post(
+router.post(
   '/newGuest',
   body('firstName').notEmpty(),
   body('lastName').notEmpty(),
@@ -27,16 +27,13 @@ router.get('/newGuest', (req, res) => {
   (req, res) => {
     validateBody(req) 
 
-    const existingUser = userRepository.getUserByFirstName(req.body.firstName) 
-    if (existingUser) {
-      throw new Error('Unable to create the user') 
-    }
+    const token = req.headers.authorization.split(' ')
 
-    userRepository.add(req).then(r => {
+    userRepository.addGuest(extractUserId(token[1], process.env.JWT_SECRET).userId, req.body).then(r => {
       res.status(r.status).send(r.message)
     })
   }
-)  */
+)
 
 router.get('/oldGuest', (req, res) => {
   const token = req.headers.authorization.split(' ')
@@ -82,6 +79,8 @@ router.put('/updateUser',
   body('mail').notEmpty(),
   body('password').notEmpty(),
   (req, res) => {
+    validateBody(req) 
+
     const token = req.headers.authorization.split(' ')
     userRepository.updateUser(extractUserId(token[1], process.env.JWT_SECRET).userId, req.body).then(r => {
       if(r) {

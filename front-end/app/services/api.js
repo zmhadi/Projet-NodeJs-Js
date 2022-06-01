@@ -120,4 +120,19 @@ class Api {
             }
         })();
     }
+
+    addGuest(data) {
+        return (async () => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/newGuest`, {
+                    method: 'POST',
+                    headers: this.myHeaders,
+                    body: JSON.stringify({firstName: data.firstName,lastName: data.lastName, birthDate: data.birthDate})
+                });
+                await rawResponse.json()
+                this.status = rawResponse.status || 'undefined'
+            } catch {
+            }
+        })();
+    }
 }

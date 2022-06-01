@@ -59,12 +59,21 @@ class HomeController extends BaseController {
         $('#unknowUser').innerHTML = ''
         const oldGuest = await this.model.getOldGuest()
         const newGuest = await this.model.getNewGuest()
+
+        if(oldGuest.length == 0) {
+            $('#knowUser').innerHTML = `<div style="color: grey; text-align: center; font-size: 11px;">Aucune rencontre.</div>`
+        }
+
+        if(newGuest.length == 0) {
+            $('#unknowUser').innerHTML = `<div style="color: grey; text-align: center; font-size: 11px;">Aucune rencontre.</div>`
+        }
+
         for(let i = oldGuest.length-1; i>=0; i--) {
             if(i >= oldGuest.length-2) {
                 if (i == 0) {
                     $('#knowUser').innerHTML += `<div>
-                                                            <div style="color: teal; font-weight: bold;">
-                                                                ${oldGuest[i].firstName} ${oldGuest[i].lastName}
+                                                            <div style="color: teal; font-weight: bold; text-transform: capitalize;">
+                                                                ${oldGuest[i].firstName} <span style="text-transform: uppercase;">${oldGuest[i].lastName}</span>
                                                                 <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
                                                                     , ${await getAge(new Date(oldGuest[i].birthDate))} ans
                                                                 </span>
@@ -75,8 +84,8 @@ class HomeController extends BaseController {
                                                         </div>`
                 } else {
                     $('#knowUser').innerHTML += `<div style="border-bottom: 1px solid lightgrey; padding-bottom: 10px; padding-top: 7px;">
-                                                            <div style="color: teal; font-weight: bold;">
-                                                                ${oldGuest[i].firstName} ${oldGuest[i].lastName} 
+                                                            <div style="color: teal; font-weight: bold; text-transform: capitalize;">
+                                                                ${oldGuest[i].firstName} <span style="text-transform: uppercase;">${oldGuest[i].lastName}</span>
                                                                 <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
                                                                     , ${await getAge(new Date(oldGuest[i].birthDate))} ans
                                                                 </span>
@@ -104,31 +113,45 @@ class HomeController extends BaseController {
             if(i >= newGuest.length-2) {
                 if(i == 0) {
                     $('#unknowUser').innerHTML += `<div>
-                                                        <div style="color: teal; font-weight: bold;">
-                                                            ${newGuest[i].firstName} ${newGuest[i].lastName}
-                                                            <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
-                                                                , ${await getAge(new Date(newGuest[i].birthDate))} ans
-                                                            </span>
-                                                        </div>
-                                                    </div>`
+                                                            <div style="color: teal; font-weight: bold; text-transform: capitalize;">
+                                                                ${newGuest[i].firstName} <span style="text-transform: uppercase;">${newGuest[i].lastName}</span>
+                                                                <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
+                                                                    , ${await getAge(new Date(newGuest[i].birthDate))} ans
+                                                                </span>
+                                                            </div>
+                                                          </div>`
                 }
                 else {
                     $('#unknowUser').innerHTML += `<div style="border-bottom: 1px solid lightgrey; padding-bottom: 10px; padding-top: 7px;">
-                                                        <div style="color: teal; font-weight: bold;">
-                                                            ${newGuest[i].firstName} ${newGuest[i].lastName}
-                                                            <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
-                                                                , ${await getAge(new Date(newGuest[i].birthDate))} ans
-                                                            </span>
-                                                        </div>
-                                                    </div>`
+                                                            <div style="color: teal; font-weight: bold; text-transform: capitalize;">
+                                                                ${newGuest[i].firstName} <span style="text-transform: uppercase;">${newGuest[i].lastName}</span>
+                                                                <span style="color: grey !important; font-size: 11px; font-weight: initial !important;">
+                                                                    , ${await getAge(new Date(newGuest[i].birthDate))} ans
+                                                                </span>
+                                                            </div>
+                                                          </div>`
                 }
             }
         }
         if(newGuest.length-2 > 0) {
             $("#unknowUser").innerHTML += `<div style="color: grey; font-size: 11px; font-weight: initial; padding-top: 10px;">
                                                         ${newGuest.length-2} autre(s) rencontre(s) suggérée(s)
-                                                      </div>`
+                                                  </div>`
         }
+    }
+
+    async addGuest () {
+        await this.model.addGuest({
+            firstName: $("#labelAddGuestFirstName").value,
+            lastName: $("#labelAddGuestLastName").value,
+            birthDate: $("#labelAddGuestBirthDate").value
+        })
+
+        $("#labelAddGuestFirstName").value = ''
+        $("#labelAddGuestLastName").value = ''
+        $("#labelAddGuestBirthDate").value = ''
+        $("#closeModalAddGuest").click()
+        await this.load()
     }
 }
 

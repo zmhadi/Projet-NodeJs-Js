@@ -22,12 +22,28 @@ exports.getUserByMail = async function (mail) {
 exports.getUserById = async function (id) {
   const DAOUsers = require('./dao/DAOUsers')
 
-    const user = await DAOUsers.findUserById(id)
-    if (user){
-        return {status: 200, message:user}
-    } else {
-        return {status: 404, message:'User not exist'}
-    }
+  const user = await DAOUsers.findUserById(id)
+  if (user){
+      return {status: 200, message:user}
+  } else {
+      return {status: 404, message:'User not exist'}
+  }
+}
+
+/**
+ * return a list of meet for a guest from the database
+ * @params {object} data - contain firstName, lastName and birthDate
+ */
+exports.getGuestByIdentity = async function(data) {
+  const DAOUsers = require('./dao/DAOUsers')
+  
+  const {firstName, lastName, birthDate} = data
+  const guest = await DAOUsers.findGuestByIdentity(firstName, lastName, birthDate)
+  if (guest){
+    return {status: 200, message:guest}
+  } else {
+    return {status: 404, message:'Guest not exist'}
+  }
 }
 
 /**
@@ -51,6 +67,27 @@ exports.addUser = async function (data) {
   } else {
       return {status: 409, message:'User already exist'} //conflict
   }
+}
+
+/**
+ * add new Guest in database
+ * @params {int} id - id of user
+ * @params {string} firstName - firstName of guest
+ * @params {string} lastName - lastName of guest
+ * @params {string} birthDate - birthDate of guest
+ */
+exports.addGuest = async function (id, data) {
+  const DAOUsers = require('./dao/DAOUsers')
+  
+  const {firstName, lastName, birthDate} = data
+
+  if (!firstName) return {status: 422, message:'First name required.'}
+  if (!lastName) return  {status: 422, message:'Last name required.'}
+  if (!birthDate) return {status: 422, message:'Birth date required.'}
+
+  await DAOUsers.addGuest(id, firstName, lastName, birthDate)
+
+  return {status: 200, message:'Guest Added !'}
 }
 
 /**
