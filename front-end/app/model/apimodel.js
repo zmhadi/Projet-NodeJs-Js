@@ -50,36 +50,27 @@ class Apimodel {
         }
     }
 
-    getUserMail() {
+    getUser() {
         try {
-            return this.api.getUserMail()
+            return this.api.getUser()
         }
         catch {
             return undefined
         }
     }
 
-    getUser(mail) {
+    getOldGuest() {
         try {
-            return this.api.getUser(mail)
+            return this.api.getOldGuest()
         }
         catch {
             return undefined
         }
     }
 
-    getOldGuest(mail) {
+    getNewGuest() {
         try {
-            return this.api.getOldGuest(mail)
-        }
-        catch {
-            return undefined
-        }
-    }
-
-    getNewGuest(mail) {
-        try {
-            return this.api.getNewGuest(mail)
+            return this.api.getNewGuest()
         }
         catch {
             return undefined

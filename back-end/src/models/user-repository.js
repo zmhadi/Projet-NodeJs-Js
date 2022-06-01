@@ -2,9 +2,9 @@ const { users } = require('./db');
 const uuid = require('uuid');
 const { generateHashedPassword } = require('../security/crypto');
 
-exports.getOldGuest = async function (userMail) {
+exports.getOldGuest = async function (id) {
   const DAOUsers = require('./dao/DAOUsers')
-    const guests = await DAOUsers.getOldGuest(userMail)
+    const guests = await DAOUsers.getOldGuest(id)
     const arrayGuests = []
     if(guests != undefined) {
       for await (let guest of guests) {
@@ -16,10 +16,10 @@ exports.getOldGuest = async function (userMail) {
     }
 };
 
-exports.getNewGuest = async function (userMail) {
+exports.getNewGuest = async function (id) {
   const DAOUsers = require('./dao/DAOUsers')
 
-    const guests = await DAOUsers.getNewGuest(userMail)
+    const guests = await DAOUsers.getNewGuest(id)
     const arrayGuests = []
     if(guests != undefined) {
       for await (let guest of guests) {
@@ -30,17 +30,6 @@ exports.getNewGuest = async function (userMail) {
         return {status: 404, message:'Undefined'}
     }
 };
-
-/* exports.getUserByFirstName = async function (firstName) {
-  const DAOUsers = require('./dao/DAOUsers')
-
-    const user = await DAOUsers.find(firstName)
-    if (user){
-        return {status: 200, message:user}
-    } else {
-        return {status: 404, message:'User not exist'}
-    }
-}; */
 
 exports.getUserByMail = async function (mail) {
   const DAOUsers = require('./dao/DAOUsers')
@@ -49,10 +38,20 @@ exports.getUserByMail = async function (mail) {
     if (user){
         return {status: 200, message:user}
     } else {
-        return {status: 404, message:'Mail not exist'}
+        return {status: 404, message:'User not exist'}
     }
 };
 
+exports.getUserById = async function (id) {
+  const DAOUsers = require('./dao/DAOUsers')
+
+    const user = await DAOUsers.findUserById(id)
+    if (user){
+        return {status: 200, message:user}
+    } else {
+        return {status: 404, message:'User not exist'}
+    }
+};
 /**
  * add new User, checks that the User does not exist
  * @param req - The params send by user with HTML request
@@ -77,9 +76,9 @@ exports.addUser = async function (data) {
  * update User with id, checks that the User exist
  * @param req - The params send by user with HTML request
  */
-exports.updateUser = async function (mail, data) {
+exports.updateUser = async function (id, data) {
   const DAOUsers = require('./DAO/DAOUsers')
-  const foundUser = await DAOUsers.findUserByMail(mail)
+  const foundUser = await DAOUsers.findUserById(id)
   if (!foundUser) {
     throw new Error('User not found');
   }

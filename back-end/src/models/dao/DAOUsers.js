@@ -3,15 +3,17 @@ const db = require('../db')
 /**
  * return all Users from the database
  */
- const getOldGuest = async function (userMail) {
-    return await db.select('*').from('Guest').where({userMail: userMail})
+ const getOldGuest = async function (id) {
+    const user = await findUserById(id)
+    return await db.select('*').from('Guest').where({userMail: user[0].mail})
 }
 
 /**
  * return all Users from the database
  */
-const getNewGuest = async function (userMail) {
-   return await db.select('*').from('Guest').where('userMail', '!=', userMail)
+const getNewGuest = async function (id) {
+   const user = await findUserById(id)
+   return await db.select('*').from('Guest').where('userMail', '!=', user[0].mail)
 }
 
 /**
@@ -20,6 +22,10 @@ const getNewGuest = async function (userMail) {
  */
 const findUserByMail = async function (mail) {
     return await db.select('*').from('Users').where({mail: mail})
+}
+
+const findUserById = async function (id) {
+    return await db.select('*').from('Users').where({id: id})
 }
 
 /**
@@ -64,6 +70,7 @@ module.exports = {
     getNewGuest,
     getOldGuest,
     findUserByMail,
+    findUserById,
     addUser,
     //remove,
     updateUser,

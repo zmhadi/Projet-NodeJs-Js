@@ -3,7 +3,6 @@ class Api {
         this.baseurl = "http://localhost:3000"
         this.status = 500
         this.token = localStorage.getItem("token")
-        this.userMail = localStorage.getItem("mail")
         this.myHeaders = new Headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -20,10 +19,6 @@ class Api {
         return this.responseError
     }
 
-    getUserMail(){
-        return this.userMail;
-    }
-
     connection(data) {
         return (async () => {
             try {
@@ -38,7 +33,6 @@ class Api {
                     this.responseError = content[0].param
                 }
                 localStorage.setItem("token", 'Bearer '+content.token)
-                localStorage.setItem("mail", data.mail)
             } catch (e) {
                 console.log(e)
             }
@@ -73,7 +67,7 @@ class Api {
     getUser(mail){
         return (async () => {
             try {
-                const rawResponse = await fetch(`${this.baseurl}/users/${mail}`, {
+                const rawResponse = await fetch(`${this.baseurl}/users/userInfo`, {
                     method: 'GET',
                     headers: this.myHeaders,
                 });
@@ -87,7 +81,7 @@ class Api {
     editUser(mail, data){
         return (async () => {
             try {
-                const rawResponse = await fetch(`${this.baseurl}/users/${mail}`, {
+                const rawResponse = await fetch(`${this.baseurl}/users/updateUser`, {
                     method: 'PUT',
                     headers: this.myHeaders,
                     body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
@@ -102,7 +96,7 @@ class Api {
     getOldGuest(mail) {
         return (async () => {
             try {
-                const rawResponse = await fetch(`${this.baseurl}/users/oldGuest/${mail}`, {
+                const rawResponse = await fetch(`${this.baseurl}/users/oldGuest`, {
                     method: 'GET',
                     headers: this.myHeaders,
                 });
@@ -116,7 +110,7 @@ class Api {
     getNewGuest(mail) {
         return (async () => {
             try {
-                const rawResponse = await fetch(`${this.baseurl}/users/newGuest/${mail}`, {
+                const rawResponse = await fetch(`${this.baseurl}/users/newGuest`, {
                     method: 'GET',
                     headers: this.myHeaders,
                 });

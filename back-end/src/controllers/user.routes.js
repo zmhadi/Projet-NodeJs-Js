@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const userRepository = require('../models/user-repository');
+const { extractUserId } = require('../security/auth');
 const { validateBody } = require('./validation/route.validator');
 const guard = require('express-jwt-permissions')({
   permissionsProperty: 'roles',
@@ -10,32 +11,34 @@ const guard = require('express-jwt-permissions')({
 const adminRole = 'ADMIN';
 const adminOrMemberRoles = [[adminRole], ['MEMBER']];
 
-router.get('/newGuest/:mail', (req, res) => {
-  userRepository.getNewGuest(req.params.mail).then(r => {
-    res.status(r.status).send(r.message)
-  })
-});
-
-router.get('/oldGuest/:mail', (req, res) => {
-  userRepository.getOldGuest(req.params.mail).then(r => {
-    res.status(r.status).send(r.message)
-  })
-});
-
-router.get('/:mail', (req, res) => {
+router.get('/newGuest', (req, res) => {
   const token = req.headers.authorization.split(' ')
-  console.log('debug get', token[1])
-  const foundUser = userRepository.getUserByMail(req.params.mail);
+
+  userRepository.getNewGuest(extractUserId(token[1], process.env.JWT_SECRET).userId).then(r => {
+    res.status(r.status).send(r.message)
+  })
+});
+
+router.get('/oldGuest', (req, res) => {
+  const token = req.headers.authorization.split(' ')
+
+  userRepository.getOldGuest(extractUserId(token[1], process.env.JWT_SECRET).userId).then(r => {
+    res.status(r.status).send(r.message)
+  })
+});
+
+router.get('/userInfo', (req, res) => {
+  const token = req.headers.authorization.split(' ')
+  const foundUser = userRepository.getUserById(extractUserId(token[1], process.env.JWT_SECRET).userId);
   if (!foundUser) {
     throw new Error('User not found');
   }
-
-  userRepository.getUserByMail(req.params.mail).then(r => {
+  userRepository.getUserById(extractUserId(token[1], process.env.JWT_SECRET).userId).then(r => {
     res.status(r.status).send(r.message)
   })
 });
 
-router.post(
+/* router.post(
   '/',
   guard.check(adminRole),
   body('firstName').notEmpty(),
@@ -53,10 +56,11 @@ router.post(
       res.status(r.status).send(r.message)
     })
   }
-);
+); */
 
-router.put('/:mail', (req, res) => {
-  userRepository.updateUser(req.params.mail, req.body).then(r => {
+router.put('/updateUser', (req, res) => {
+  const token = req.headers.authorization.split(' ')
+  userRepository.updateUser(extractUserId(token[1], process.env.JWT_SECRET).userId, req.body).then(r => {
     if(r) {
       res.status(200).end()
     }

@@ -11,7 +11,7 @@ class HomeController extends BaseController {
     }
 
     async load() {
-        const user = await this.model.getUser(this.model.getUserMail())
+        const user = await this.model.getUser()
         await this.historyMeet()
         $("#labelPseudoEdit").placeholder= user[0].pseudo
         $("#labelMailEdit").placeholder= user[0].mail
@@ -30,7 +30,7 @@ class HomeController extends BaseController {
     }
 
     async apply() {
-        await this.model.editUser(this.model.getUserMail(), {
+        await this.model.editUser(this.model.getUser().mail, {
             pseudo: $("#labelPseudoEdit").value || $("#labelPseudoEdit").placeholder,
             mail: $("#labelMailEdit").value || $("#labelMailEdit").placeholder,
             password: $("#labelPasswordEdit").value || $("#labelPasswordEdit").placeholder
@@ -57,8 +57,8 @@ class HomeController extends BaseController {
 
         $('#knowUser').innerHTML = ''
         $('#unknowUser').innerHTML = ''
-        const oldGuest = await this.model.getOldGuest(this.model.getUserMail())
-        const newGuest = await this.model.getNewGuest(this.model.getUserMail())
+        const oldGuest = await this.model.getOldGuest()
+        const newGuest = await this.model.getNewGuest()
         for(let i = oldGuest.length-1; i>=0; i--) {
             if(i >= oldGuest.length-2) {
                 if (i == 0) {
