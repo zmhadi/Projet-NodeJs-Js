@@ -85,4 +85,31 @@ class Apimodel {
             return undefined
         }
     }
+
+    getInfoGuest(id) {
+        try {
+            return this.api.getInfoGuest(id)
+        }
+        catch {
+            return undefined
+        }
+    }
+
+    deleteGuest(id) {
+        try {
+            return this.api.deleteGuest(id)
+        }
+        catch {
+            return undefined
+        }
+    }
+
+    updateGuest(id, data) {
+        try {
+            return this.api.updateGuest(id, data)
+        }
+        catch {
+            return undefined
+        }
+    }
 }

@@ -31,6 +31,21 @@ exports.getUserById = async function (id) {
 }
 
 /**
+ * return one Guest from the database
+ * @params {int} id - id of guest
+ */
+exports.getGuestById = async function (id) {
+  const DAOUsers = require('./dao/DAOUsers')
+
+  const guest = await DAOUsers.findGuestById(id)
+  if (guest){
+      return {status: 200, message:guest}
+  } else {
+      return {status: 404, message:'User not exist'}
+  }
+}
+
+/**
  * return a list of meet for a guest from the database
  * @params {object} data - contain firstName, lastName and birthDate
  */
@@ -79,13 +94,13 @@ exports.addUser = async function (data) {
 exports.addGuest = async function (id, data) {
   const DAOUsers = require('./dao/DAOUsers')
   
-  const {firstName, lastName, birthDate} = data
+  const {sexe, firstName, lastName, birthDate} = data
 
   if (!firstName) return {status: 422, message:'First name required.'}
   if (!lastName) return  {status: 422, message:'Last name required.'}
   if (!birthDate) return {status: 422, message:'Birth date required.'}
 
-  await DAOUsers.addGuest(id, firstName, lastName, birthDate)
+  await DAOUsers.addGuest(id, sexe, firstName, lastName, birthDate)
 
   return {status: 200, message:'Guest Added !'}
 }
@@ -109,21 +124,37 @@ exports.updateUser = async function (id, data) {
 
   await DAOUsers.updateUser(foundUser[0].id, foundUser[0].mail, foundUser[0].password, foundUser[0].pseudo)
   return true 
-} 
+}
+
+exports.updateGuest = async function (guestId, data) {
+  const DAOUsers = require('./DAO/DAOUsers')
+  const foundGuest = await DAOUsers.findGuestById(guestId)
+  if (!foundGuest) {
+    throw new Error('Guest not found') 
+  }
+  console.log('debug userrepo', foundGuest, data)
+
+  foundGuest[0].score = parseInt(data.score, 10) || foundUser.score 
+  foundGuest[0].note = data.note || foundUser.note 
+
+  console.log('debug userrepo', foundGuest)
+  await DAOUsers.updateGuest(guestId, foundGuest[0].score, foundGuest[0].note)
+  return {status: 200, message:'Guest Updated !'}
+}
 
 /**
- * delete User with id, checks that the User exist
- * @param req - The params send by user with HTML request
+ * delete Guest with id, checks that the Guest exist
+ * @params {int} id - id of Guest to delete
  */
-exports.remove = async function (req) {
+exports.deleteGuest = async function (id) {
   const DAOUsers = require('./DAO/DAOUsers')
 
-  const user = await DAOUsers.findWithId(req.params.id)
-  if (user.length !== 0) {
-      await DAOUsers.remove(req.params.id)
+  const guest = await DAOUsers.findGuestById(id)
+  if (guest.length !== 0) {
+      await DAOUsers.deleteGuest(id)
       return {status: 200, message:'Removed !'}
   } else {
-      return {status: 404, message:'User not exist'}
+      return {status: 404, message:'Guest not exist'}
   }
 }
 

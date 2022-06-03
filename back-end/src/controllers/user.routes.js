@@ -89,12 +89,34 @@ router.put('/updateUser',
       res.status(400).end()
     })
   }
+)
+
+router.put('/updateGuest/:id',
+  body('score').notEmpty(),
+  body('note').notEmpty(),
+  (req, res) => {
+    validateBody(req) 
+
+    userRepository.updateGuest(req.params.id, req.body).then(r => {
+      console.log('debug route', req.params.id, req.body)
+      if(r) {
+        res.status(200).end()
+      }
+      res.status(400).end()
+    })
+  }
 ) 
 
-/* router.delete('/:id', guard.check(adminRole), (req, res) => {
-  userRepository.remove(req).then(r => {
+router.delete('/guest/:id', (req, res) => {
+  userRepository.deleteGuest(req.params.id).then(r => {
     res.status(r.status).send(r.message)
   })
-})  */
+}) 
+
+router.get('/guest/:id', (req, res) => {
+  userRepository.getGuestById(req.params.id).then(r => {
+    res.status(r.status).send(r.message)
+  })
+}) 
 
 exports.initializeRoutes = () => router 

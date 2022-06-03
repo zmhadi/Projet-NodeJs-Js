@@ -20,19 +20,22 @@ class Api {
     }
 
     connection(data) {
-        return (async () => {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/login`, {
                     method: 'POST',
                     headers: this.myHeaders,
-                    body: JSON.stringify({mail: data.mail, password: data.password})
+                    body: JSON.stringify({
+                        mail: data.mail,
+                        password: data.password
+                    })
                 });
                 this.status = rawResponse.status || 'undefined'
                 const content = await rawResponse.json()
-                if(content[0] != undefined) {
+                if (content[0] != undefined) {
                     this.responseError = content[0].param
                 }
-                localStorage.setItem("token", 'Bearer '+content.token)
+                localStorage.setItem("token", 'Bearer ' + content.token)
             } catch (e) {
                 console.log(e)
             }
@@ -44,16 +47,20 @@ class Api {
     }
 
     register(data) {
-        return (async () => {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/create`, {
                     method: 'POST',
                     headers: this.myHeaders,
-                    body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
+                    body: JSON.stringify({
+                        pseudo: data.pseudo,
+                        mail: data.mail,
+                        password: data.password
+                    })
                 });
                 this.status = rawResponse.status || 'undefined'
                 const content = await rawResponse.json()
-                if(await content != undefined) {
+                if (await content != undefined) {
                     this.responseError = content[0].param
                     console.log(content)
                 }
@@ -64,8 +71,8 @@ class Api {
         })();
     }
 
-    getUser(mail){
-        return (async () => {
+    getUser(mail) {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/users/userInfo`, {
                     method: 'GET',
@@ -78,13 +85,17 @@ class Api {
         })();
     }
 
-    editUser(mail, data){
-        return (async () => {
+    editUser(mail, data) {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/users/updateUser`, {
                     method: 'PUT',
                     headers: this.myHeaders,
-                    body: JSON.stringify({pseudo: data.pseudo,mail: data.mail, password: data.password})
+                    body: JSON.stringify({
+                        pseudo: data.pseudo,
+                        mail: data.mail,
+                        password: data.password
+                    })
                 });
                 this.status = rawResponse.status
             } catch (e) {
@@ -94,7 +105,7 @@ class Api {
     }
 
     getOldGuest(mail) {
-        return (async () => {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/users/oldGuest`, {
                     method: 'GET',
@@ -108,7 +119,7 @@ class Api {
     }
 
     getNewGuest(mail) {
-        return (async () => {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/users/newGuest`, {
                     method: 'GET',
@@ -122,17 +133,64 @@ class Api {
     }
 
     addGuest(data) {
-        return (async () => {
+        return (async() => {
             try {
                 const rawResponse = await fetch(`${this.baseurl}/users/newGuest`, {
                     method: 'POST',
                     headers: this.myHeaders,
-                    body: JSON.stringify({firstName: data.firstName,lastName: data.lastName, birthDate: data.birthDate})
+                    body: JSON.stringify({
+                        sexe: data.sexe,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        birthDate: data.birthDate
+                    })
                 });
                 await rawResponse.json()
                 this.status = rawResponse.status || 'undefined'
-            } catch {
-            }
+            } catch {}
+        })();
+    }
+
+    deleteGuest(id) {
+        return (async() => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/guest/${id}`, {
+                    method: 'DELETE',
+                    headers: this.myHeaders,
+                });
+                await rawResponse.json()
+                this.status = rawResponse.status || 'undefined'
+            } catch {}
+        })();
+    }
+
+    getInfoGuest(id) {
+        return (async() => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/guest/${id}`, {
+                    method: 'GET',
+                    headers: this.myHeaders,
+                });
+                this.status = rawResponse.status || 'undefined'
+                return await rawResponse.json()
+            } catch {}
+        })();
+    }
+
+    updateGuest(id, data) {
+        return (async() => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/updateGuest/${id}`, {
+                    method: 'PUT',
+                    headers: this.myHeaders,
+                    body: JSON.stringify({
+                        score: data.score,
+                        note: data.note
+                    })
+                });
+                this.status = rawResponse.status || 'undefined'
+                return await rawResponse.json()
+            } catch {}
         })();
     }
 }
