@@ -3,6 +3,7 @@
         <div class="card" style="max-height: 50%">
             <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">
                 <div id="cardTitle"></div>
+                <span style="width: 100%; color: grey; text-align: center; font-size: 12px">Bienvenue sur votre tableau de bord !</span><br>
                 <span style="font-size: 15px;color: grey;" data-bs-toggle="modal" data-bs-target="#editModal">
                    <ins>Editer mon compte</ins>  <i class='far fa-edit' style="text-align: right !important;"></i>
                 </span>
@@ -23,6 +24,7 @@
     <div class="row">
         <div class="card" style="max-height: 50%">
             <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">Speed-dating</div>
+            <span style="width: 100%; color: grey; text-align: center; font-size: 12px">Vous pouvez pré-ajouter jusqu'à deux rencontres de préférence, pour cela veuillez appuyer sur le bouton ci-dessous.</span><br>
             <div class="card-footer" style="background-color: inherit">
                 <button type="button" class="btn btn-primary" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#createSessionModal">Ajouter une rencontre</button>
             </div>
@@ -33,6 +35,7 @@
         <div class="col">
             <div class="card" style="max-height: 50%">
                 <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">Prochaines rencontres</div>
+                <span style="width: 100%; color: grey; text-align: center; font-size: 12px">Votre liste de rencontre à venir, passez un bon moment !</span><br>
                 <div class="card-body" id="unknowUser">
                 </div>
             </div>
@@ -40,123 +43,8 @@
         <div class="col">
             <div class="card" style="max-height: 50%">
                 <div class="card-title" style="font-size: 20px; color: grey;text-align: center;">Dernières rencontres</div>
-                <div class="card-body" id="knowUser">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="padding: 0 10px 10px;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: teal;">Editer mon compte</h5>
-                    <button id="closeModalEdit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <img src="../res/face.png" alt="" id="imageUser" >
-                        </div>
-                        <div class="col">
-                            <div style=" padding-left:5px">
-                                <label for="labelPseudoEdit" class="form-label">Pseudo</label>
-                                <input type="text" class="form-control" id="labelPseudoEdit" placeholder="" readonly>
-                                <label id="mailEdit" for="labelMailEdit" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="labelMailEdit" aria-describedby="emailHelp" placeholder="" readonly>
-                                <label for="labelPasswordEdit" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="labelPasswordEdit" placeholder="" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="buttonEdit" style="width: 100%" type="button" class="btn btn-secondary" onclick="homeController.edit()">Editer mon compte</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="createSessionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropCreateSession" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="padding: 0 10px 10px;">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: teal;">
-                        Ajouter une rencontre
-                    </h5>
-                    <button id="closeModalAddGuest" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="selectSexe">Civilité</label>
-                        <select class="form-select form-control-sm" id="selectSexe" style="height: 33px;">
-                            <option value="Mr" selected>Homme</option>
-                            <option value="Mme">Femme</option>
-                        </select>
-                        <label for="labelAddGuestFirstName" class="form-label">Prénom</label>
-                        <input type="text" class="form-control" id="labelAddGuestFirstName" aria-describedby="emailHelp" placeholder="Entrer le prénom">
-                        <label for="labelAddGuestLastName" class="form-label">Nom de famille</label>
-                        <input type="text" class="form-control" id="labelAddGuestLastName" aria-describedby="emailHelp" placeholder="Entrer le nom de famille">
-                        <label for="labelAddGuestBirthDate" class="form-label">Date de naissance</label>
-                        <input type="date" class="form-control" id="labelAddGuestBirthDate" aria-describedby="emailHelp" placeholder="Entrer la date de naissance">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="buttonCreateSession" style="width: 100%" type="button" class="btn btn-secondary" onclick="homeController.addGuest()">Ajouter</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalDeleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="padding: 0 10px 10px;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: teal;">Confirmation de supression</h5>
-                    <button id="buttonCloseModalConfirmDelete" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="text-align: center">
-                    Êtes-vous sûr de vouloir supprimer cette rencontre ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: grey; left: 15px; position: absolute">Annuler</button>
-                    <button type="button" class="btn btn-primary" id="buttonConfirmDeleteGuest">Confirmer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalEditGuest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropCreateSession" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="padding: 0 10px 10px;">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: teal;">
-                        Modifier une rencontre
-                    </h5>
-                    <button id="closeModalEditGuest" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="infoGuestEdit"></div>
-                    <div class="form-group">
-                        <label for="labelEditGuestScore">Note</label>
-                        <select class="form-select form-control-sm" aria-label="Default select example" id="labelEditGuestScore" style="height: 33px">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                    </div>
-                    <label for="labelEditGuestNote" class="form-label">Remarque</label>
-                    <textarea class="form-control" id="labelEditGuestNote" rows="6"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button id="buttonEditGuest" style="width: 100%" type="button" class="btn btn-secondary" >Ajouter</button>
+                <span style="width: 100%; color: grey; text-align: center; font-size: 12px">Votre historique de rencontre à porté de main, vous pouvez la modifier, supprimer ou même la partager avec les autres utilisateurs !</span><br>
+                <div class="card-body" id="knowUser" style="max-height: 230px; overflow-y: scroll; display: flex; flex-direction: column">
                 </div>
             </div>
         </div>
@@ -166,4 +54,192 @@
         <button type="button" class="btn" style="width: 100%; margin-top: 10px; margin-bottom: 10px; color: white; background-color: red" onclick="homeController.deconnection()">Déconnexion</button>
     </div>
 </div>
+
+<div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 0 10px 10px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="color: teal;">Editer mon compte</h5>
+                <button id="closeModalEdit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <img src="../res/face.png" alt="" id="imageUser" >
+                    </div>
+                    <div class="col">
+                        <div style=" padding-left:5px">
+                            <label for="labelPseudoEdit" class="form-label">Pseudo</label>
+                            <input type="text" class="form-control" id="labelPseudoEdit" placeholder="" readonly>
+                            <label id="mailEdit" for="labelMailEdit" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="labelMailEdit" aria-describedby="emailHelp" placeholder="" readonly>
+                            <label for="labelPasswordEdit" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="labelPasswordEdit" placeholder="" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="buttonEdit" style="width: 100%" type="button" class="btn btn-secondary" onclick="homeController.edit()">Editer mon compte</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createSessionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropCreateSession" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 0 10px 10px;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: teal;">
+                    Ajouter une rencontre
+                </h5>
+                <button id="closeModalAddGuest" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <span style="width: 100%; color: grey; text-align: center; font-size: 12px; padding-top: 20px">Afin d'ajouter correctement une rencontre, merci de bien vérifier la saisie des informations personnelles.</span>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="selectSexe">Civilité</label>
+                    <select class="form-select form-control-sm" id="selectSexe" style="height: 33px;">
+                        <option value="mr" selected>Homme</option>
+                        <option value="mme">Femme</option>
+                    </select>
+                    <label for="labelAddGuestFirstName" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" id="labelAddGuestFirstName" placeholder="Entrer le prénom">
+                    <label for="labelAddGuestLastName" class="form-label">Nom de famille</label>
+                    <input type="text" class="form-control" id="labelAddGuestLastName" placeholder="Entrer le nom de famille">
+                    <label for="labelAddGuestBirthDate" class="form-label">Date de naissance</label>
+                    <input type="date" class="form-control" id="labelAddGuestBirthDate" placeholder="Entrer la date de naissance">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="buttonCreateSession" style="width: 100%" type="button" class="btn btn-secondary" onclick="homeController.addGuest()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 0 10px 10px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: teal;">Confirmation de supression</h5>
+                <button id="buttonCloseModalConfirmDelete" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                Êtes-vous sûr de vouloir supprimer cette rencontre ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: grey; left: 15px; position: absolute">Annuler</button>
+                <button type="button" class="btn btn-primary" id="buttonConfirmDeleteGuest">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditGuest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropCreateSession" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 0 10px 10px;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: teal;">
+                    Modifier une rencontre
+                </h5>
+                <button id="closeModalEditGuest" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="infoGuestEdit"></div>
+                <div class="form-group">
+                    <label for="labelEditGuestScore">Note</label>
+                    <select class="form-select form-control-sm" aria-label="Default select example" id="labelEditGuestScore" style="height: 33px">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <label for="labelEditGuestNote" class="form-label">Remarque</label>
+                <textarea class="form-control" id="labelEditGuestNote" rows="6"></textarea>
+                <div>
+                    <div class="form-group" style="padding-bottom: 20px">
+                        <label for="labelEditGuestShare">Partager la remarque ?</label>
+                        <select class="form-select form-control-sm" aria-label="Default select example" id="labelEditGuestShare" style="height: 33px">
+                            <option value="true">Oui</option>
+                            <option value="false">Non</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="buttonEditGuest" style="width: 100%" type="button" class="btn btn-secondary" >Modifier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalConfirmMeet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 0 10px 10px;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: teal;">Fiche rencontre</h5>
+                <button id="buttonCloseModalConfirmMeet" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center">Comment s'est déroulée votre rencontre ?</p>
+                <div class="form-group">
+                    <label for="labelAddGuestScore">Veuillez noter la rencontre (de 0 à 10) :</label>
+                    <select class="form-select form-control-sm" aria-label="Default select example" id="labelAddGuestScore" style="height: 33px">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected>5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <label for="labelAddGuestNote" class="form-label">Notez une remarque de votre rencontre :</label>
+                <textarea class="form-control" id="labelAddGuestNote" rows="6"></textarea>
+                <div class="form-group" style="padding-bottom: 20px">
+                    <label for="labelAddGuestShare">Partager la remarque ?</label>
+                    <select class="form-select form-control-sm" aria-label="Default select example" id="labelAddGuestShare" style="height: 33px">
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: grey; left: 15px; position: absolute">Annuler</button>
+                <button type="button" class="btn btn-primary" id="buttonConfirmMeet">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalHistoryGuest" tabindex="-1" style="z-index: 1041" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding: 0 10px 10px;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: teal;">
+                    Récapitulatif
+                </h5>
+                <button id="buttonCloseModalHistoryGuest" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="text-align: center" id="contentHistoryGuest">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: grey; width: 100%">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 

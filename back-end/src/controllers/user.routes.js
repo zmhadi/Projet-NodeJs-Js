@@ -94,11 +94,11 @@ router.put('/updateUser',
 router.put('/updateGuest/:id',
   body('score').notEmpty(),
   body('note').notEmpty(),
+  body('hasShare').notEmpty(),
   (req, res) => {
     validateBody(req) 
 
     userRepository.updateGuest(req.params.id, req.body).then(r => {
-      console.log('debug route', req.params.id, req.body)
       if(r) {
         res.status(200).end()
       }
@@ -115,6 +115,12 @@ router.delete('/guest/:id', (req, res) => {
 
 router.get('/guest/:id', (req, res) => {
   userRepository.getGuestById(req.params.id).then(r => {
+    res.status(r.status).send(r.message)
+  })
+}) 
+
+router.get('/guest/history/:id', (req, res) => {
+  userRepository.getGuestByIdentity(req.params.id).then(r => {
     res.status(r.status).send(r.message)
   })
 }) 

@@ -10,7 +10,6 @@ class IndexController extends BaseController {
             mail: $("#labelMailLogin").value,
             password: $("#labelPasswordLogin").value
         });
-        console.log('connection', this.model.getStatus());
         this.userMail = $("#labelMailLogin").value;
         if (this.model.getStatus() == 200) {
             navigate("home");
@@ -19,7 +18,6 @@ class IndexController extends BaseController {
 
     async verify() {
         let message = this.model.getResponseError();
-        console.log(message);
         if (message == "password") {
             $("#toastMessage").innerText = "Must define password";
             this.toast("toastLogin");
@@ -62,7 +60,6 @@ class IndexController extends BaseController {
         };
         await this.model.register(req);
         await this.verifyModal();
-        console.log('status', this.model.getStatus());
 
         if (this.model.getStatus() == 200) {
             $("#closeModal").click();

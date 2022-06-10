@@ -26,9 +26,9 @@ router.post(
 
 router.post(
   '/create',
-  body('pseudo').not().isEmpty(),
+  body('pseudo').notEmpty(),
   body('mail').isEmail(),
-  body('password').not().isEmpty(),
+  body('password').notEmpty(),
   async(req, res) => {
     const errors = validationResult(req) 
     if (!errors.isEmpty()) {

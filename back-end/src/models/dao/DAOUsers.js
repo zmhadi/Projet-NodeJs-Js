@@ -28,8 +28,13 @@ const findUserById = async function (id) {
  * return a list of meet for a guest from the database
  * @params {object} data - contain firstName, lastName and birthDate
  */
-const findGuestByIdentity = async function(firstName, lastName, birthDate) {
-    return await db.select('*').from('Guests').where({firstName: firstName, lastName: lastName, birthDate: birthDate})
+const findGuestByIdentity = async function(sexe, firstName, lastName, birthDate) {
+    const guests = await db.select('*').from('Guests').where({sexe: sexe, firstName: firstName, lastName: lastName, birthDate: birthDate, hasShare: 'true'})
+    for(let i = 0; i<guests.length; i++){
+        const userInfo = await db.select('*').from('Users').where({id: guests[i].userId})
+        guests[i].userPseudo = userInfo[0].pseudo
+    }
+    return guests
 }
 
 /**
@@ -64,19 +69,23 @@ const updateUser = async function (id, mail, password, pseudo) {
     await db.from("Users").where({id: id}).update({mail: mail, password: password, pseudo: pseudo})
 }
 
-const updateGuest = async function (id, score, note) {
-    await db.from("Guests").where({id: id}).update({score: score, note: note})
-}
-
 /**
- * delete User in the database
- * @params {int} id - id of User
+ * update Guest in database
+ * @params {int} id - id of guest
+ * @params {string} score - score of guest
+ * @params {string} note - note of guest
+ * @params {string} hasShare - guest is share with other user
  */
-/*
-const removeUser = async function (id) {
-    await db.delete().from('Users').where({id: id})
+const updateGuest = async function (id, score, note, hasShare) {
+    const guest = await findGuestById(id)
+    if(guest[0].hasMeet == 'false') {
+        await db.from("Guests").where({id: id}).update({score: score, note: note,meetDate: new Date().toLocaleDateString() ,hasMeet: 'true', hasShare: hasShare})
+    }
+    else {
+        console.log('debug DAO', score, note, hasShare)
+        await db.from("Guests").where({id: id}).update({score: score, note: note, hasShare: hasShare})
+    }
 }
-*/
 
 /**
  * delete Guest in the database
@@ -86,9 +95,8 @@ const deleteGuest = async function (id) {
     await db.delete().from('Guests').where({id: id})
 }
 
-
 /**
- * return all Guests who are never meet with the user from the database
+ * return all Guests who are meet with the user from the database
  * @params {int} id - id of User
  */
  const getOldGuest = async function (id) {
@@ -96,7 +104,7 @@ const deleteGuest = async function (id) {
 }
 
 /**
- * return all Guests who are meet from the database
+ * return all Guests who are never meet yet from the database
  * @params {int} id - id of User
  */
 const getNewGuest = async function (id) {
@@ -104,17 +112,15 @@ const getNewGuest = async function (id) {
 }
 
 module.exports = {
-    getNewGuest,
-    getOldGuest,
     findUserByMail,
     findUserById,
     findGuestById,
     findGuestByIdentity,
     addUser,
     addGuest,
-    //remove,
-    deleteGuest,
     updateUser,
     updateGuest,
-    //findWithId
+    deleteGuest,
+    getOldGuest,
+    getNewGuest
 }

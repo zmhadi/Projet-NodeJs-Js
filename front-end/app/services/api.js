@@ -142,7 +142,8 @@ class Api {
                         sexe: data.sexe,
                         firstName: data.firstName,
                         lastName: data.lastName,
-                        birthDate: data.birthDate
+                        birthDate: data.birthDate,
+                        hasShare: data.hasShare
                     })
                 });
                 await rawResponse.json()
@@ -177,6 +178,19 @@ class Api {
         })();
     }
 
+    getGuestHistory(id) {
+        return (async() => {
+            try {
+                const rawResponse = await fetch(`${this.baseurl}/users/guest/history/${id}`, {
+                    method: 'GET',
+                    headers: this.myHeaders,
+                });
+                this.status = rawResponse.status || 'undefined'
+                return await rawResponse.json()
+            } catch {}
+        })();
+    }
+
     updateGuest(id, data) {
         return (async() => {
             try {
@@ -185,7 +199,8 @@ class Api {
                     headers: this.myHeaders,
                     body: JSON.stringify({
                         score: data.score,
-                        note: data.note
+                        note: data.note,
+                        hasShare: data.hasShare
                     })
                 });
                 this.status = rawResponse.status || 'undefined'

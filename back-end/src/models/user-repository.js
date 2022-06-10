@@ -46,14 +46,15 @@ exports.getGuestById = async function (id) {
 }
 
 /**
- * return a list of meet for a guest from the database
- * @params {object} data - contain firstName, lastName and birthDate
+ * return one Guest from the database
+ * @params {int} id - id of guest
  */
-exports.getGuestByIdentity = async function(data) {
+exports.getGuestByIdentity = async function(id) {
   const DAOUsers = require('./dao/DAOUsers')
   
-  const {firstName, lastName, birthDate} = data
-  const guest = await DAOUsers.findGuestByIdentity(firstName, lastName, birthDate)
+  const data = await DAOUsers.findGuestById(id)
+  const {sexe, firstName, lastName, birthDate} = data[0]
+  const guest = await DAOUsers.findGuestByIdentity(sexe, firstName, lastName, birthDate)
   if (guest){
     return {status: 200, message:guest}
   } else {
@@ -100,7 +101,7 @@ exports.addGuest = async function (id, data) {
   if (!lastName) return  {status: 422, message:'Last name required.'}
   if (!birthDate) return {status: 422, message:'Birth date required.'}
 
-  await DAOUsers.addGuest(id, sexe, firstName, lastName, birthDate)
+  await DAOUsers.addGuest(id, sexe, firstName.toLowerCase(), lastName.toLowerCase(), birthDate)
 
   return {status: 200, message:'Guest Added !'}
 }
@@ -126,19 +127,25 @@ exports.updateUser = async function (id, data) {
   return true 
 }
 
+/**
+ * update guest in database
+ * @params {int} guestId - id of guest
+ * @params {string} score - score of guest
+ * @params {string} note - note of guest
+ * @params {string} hasShare - if the meet was share with other user
+ */
 exports.updateGuest = async function (guestId, data) {
   const DAOUsers = require('./DAO/DAOUsers')
   const foundGuest = await DAOUsers.findGuestById(guestId)
   if (!foundGuest) {
     throw new Error('Guest not found') 
   }
-  console.log('debug userrepo', foundGuest, data)
 
-  foundGuest[0].score = parseInt(data.score, 10) || foundUser.score 
-  foundGuest[0].note = data.note || foundUser.note 
+  foundGuest[0].score = parseInt(data.score, 10) || foundGuest.score 
+  foundGuest[0].note = data.note || foundGuest.note 
+  foundGuest[0].hasShare = data.hasShare || foundGuest.hasShare
 
-  console.log('debug userrepo', foundGuest)
-  await DAOUsers.updateGuest(guestId, foundGuest[0].score, foundGuest[0].note)
+  await DAOUsers.updateGuest(guestId, foundGuest[0].score, foundGuest[0].note, foundGuest[0].hasShare)
   return {status: 200, message:'Guest Updated !'}
 }
 

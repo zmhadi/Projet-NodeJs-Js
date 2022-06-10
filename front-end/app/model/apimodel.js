@@ -112,4 +112,13 @@ class Apimodel {
             return undefined
         }
     }
+
+    getGuestHistory(id) {
+        try {
+            return this.api.getGuestHistory(id)
+        }
+        catch {
+            return undefined
+        }
+    }
 }
